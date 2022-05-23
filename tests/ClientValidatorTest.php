@@ -34,4 +34,16 @@ class ClientValidatorTest extends TestCase
         $validator->validate('e28df7be-e9f7-4bd4-a689-c8a8d51afe96', '35a56ee81ae61f7464d4bffae812eafea2534c63', ['sys:all']);
     }
 
+    public function test_callable_selector()
+    {
+        $validator = new AuthorizedClientValidator(function($client, $secret) {
+            $internal = new HttpSelector(new HttpClientStub);
+            return $internal->__invoke($client, $secret);
+        });
+        $client = $validator->validate('bdcf5a49-341e-4688-8bba-755237ecfaa1', '02afd968d07c308b6eda2fcf5915878a079f1bbf');
+        $this->assertInstanceOf(ClientInterface::class, $client);
+        $this->assertTrue($client->firstParty());
+        $this->assertFalse($client->isRevoked());
+    }
+
 }
