@@ -16,7 +16,7 @@ class UnAuthorizedClientException extends Exception
      * 
      * @var bool
      */
-    private $hasScopesError = false;
+    private $hasMissingScopes = false;
 
     /**
      * 
@@ -33,7 +33,7 @@ class UnAuthorizedClientException extends Exception
     public static function forScopes($client, array $scopes = [])
     {
         $self = new self('Client does not have required scopes.');
-        $self->hasScopesError = true;
+        $self->hasMissingScopes = true;
         $self->missingScopes = $scopes;
         $self->client = $client;
         return $self;
@@ -43,10 +43,10 @@ class UnAuthorizedClientException extends Exception
      * 
      * @return bool 
      */
-    public function hasScopesError()
+    public function hasMissingScopes()
     {
-        return null !== $this->hasScopesError ?
-            boolval($this->hasScopesError) :
+        return null !== $this->hasMissingScopes ?
+            boolval($this->hasMissingScopes) :
             false;
     }
 
