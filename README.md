@@ -28,7 +28,7 @@ As for many PHP libraries, we recommend using composer package manager to instal
 "repositories": [
     {
         "type": "vcs",
-        "url": ""
+        "url": "git@github.com:liksoft/php-authorized-clients.git"
     }
 ]
 ```
