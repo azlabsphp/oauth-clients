@@ -6,6 +6,7 @@ use Closure;
 use Drewlabs\AuthorizedClients\Contracts\ClientValidatorInterface;
 use Drewlabs\AuthorizedClients\Exceptions\UnAuthorizedClientException;
 use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
+use Drewlabs\AuthorizedClients\Contracts\ScopedClient;
 
 final class AuthorizedClientValidator implements ClientValidatorInterface
 {
@@ -40,15 +41,15 @@ final class AuthorizedClientValidator implements ClientValidatorInterface
         if (null === $client) {
             throw new UnAuthorizedClientException();
         }
-    
+
         if ($client->isRevoked()) {
             throw new UnAuthorizedClientException("Client has been revoked");
         }
 
-        // If the first_party is passed an the request client is not first party return an unauthorized HTTP response
-        $clientScopes = $client->getScopes() ?? ['*'];
-        if (!in_array('*', $clientScopes) && !empty($scopes) && empty(array_intersect($scopes, $clientScopes ?? []))) {
-            throw UnAuthorizedClientException::forScopes($client->getKey(), array_diff($clientScopes, $scopes));
+        if ($client instanceof ScopedClient) {
+            if (!$client->hasScope($scopes)) {
+                throw UnAuthorizedClientException::forScopes($client->getKey(), array_diff($client->getScopes(), $scopes));
+            }
         }
 
         //! Provide the client request headers in the proxy request headers definition

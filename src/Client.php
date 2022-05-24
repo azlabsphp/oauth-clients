@@ -3,12 +3,14 @@
 namespace Drewlabs\AuthorizedClients;
 
 use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
+use Drewlabs\AuthorizedClients\Contracts\Scope;
+use Drewlabs\AuthorizedClients\Contracts\ScopedClient;
 
 /**
  * 
  * @package Drewlabs\AuthorizedClients
  */
-class Client implements ClientInterface
+class Client implements ClientInterface, ScopedClient
 {
     /**
      * List of class attributes
@@ -61,6 +63,21 @@ class Client implements ClientInterface
             return json_decode($scopes);
         }
         return $scopes ?? [];
+    }
+
+    public function hasScope($scope)
+    {
+        $clientScopes = $this->getScopes() ?? ['*'];
+        if (in_array('*', $clientScopes)) {
+            return true;
+        }
+        if (empty($scope)) {
+            return true;
+        }
+        if ($scope instanceof Scope) {
+            $scope = (string) $scope;
+        }
+        return !empty(array_intersect(is_string($scope) ? [$scope] : $scope, $clientScopes ?? []));
     }
 
     /**

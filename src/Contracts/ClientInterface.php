@@ -44,12 +44,4 @@ interface ClientInterface
      * @return bool 
      */
     public function isRevoked();
-
-
-    /**
-     * Returns the list of scopes defines on the array
-     * 
-     * @return string[]|array 
-     */
-    public function getScopes();
 }

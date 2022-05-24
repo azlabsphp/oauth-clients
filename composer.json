@@ -3,6 +3,11 @@
     "description": "Provides core interfaces for working with server authorized clients, along with a generic client validator class",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "http",
+        "authorized server clients",
+        "clients scopes"
+    ],
     "autoload": {
         "psr-4": {
             "Drewlabs\\AuthorizedClients\\": "src/"
