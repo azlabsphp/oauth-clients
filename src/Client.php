@@ -1,33 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Drewlabs package.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drewlabs\AuthorizedClients;
 
 use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
 use Drewlabs\AuthorizedClients\Contracts\Scope;
 use Drewlabs\AuthorizedClients\Contracts\ScopedClient;
 
-/**
- * 
- * @package Drewlabs\AuthorizedClients
- */
 class Client implements ClientInterface, ScopedClient
 {
     /**
-     * List of class attributes
-     * 
+     * List of class attributes.
+     *
      * @var array
      */
     private $attributes = [];
 
     /**
-     * Constructor function
-     * 
-     * @param array $attributes 
-     * @return self 
+     * Constructor function.
+     *
+     * @return self
      */
     public function __construct(array $attributes = [])
     {
         $this->attributes = $attributes ?? [];
+    }
+
+    public function getUserID()
+    {
+        return $this->getAttribute('user_id');
     }
 
     public function getKey()
@@ -47,28 +58,29 @@ class Client implements ClientInterface, ScopedClient
 
     public function firstParty()
     {
-        return boolval($this->getAttribute('personal_access_client')) ||
-            boolval($this->getAttribute('password_client'));
+        return (bool) ($this->getAttribute('personal_access_client')) ||
+            (bool) ($this->getAttribute('password_client'));
     }
 
     public function isRevoked()
     {
-        return boolval($this->getAttribute('revoked'));
+        return (bool) ($this->getAttribute('revoked'));
     }
 
     public function getScopes()
     {
         $scopes = $this->getAttribute('scopes');
-        if (is_string($scopes)) {
+        if (\is_string($scopes)) {
             return json_decode($scopes);
         }
+
         return $scopes ?? [];
     }
 
     public function hasScope($scope)
     {
         $clientScopes = $this->getScopes() ?? ['*'];
-        if (in_array('*', $clientScopes)) {
+        if (\in_array('*', $clientScopes, true)) {
             return true;
         }
         if (empty($scope)) {
@@ -77,13 +89,14 @@ class Client implements ClientInterface, ScopedClient
         if ($scope instanceof Scope) {
             $scope = (string) $scope;
         }
-        return !empty(array_intersect(is_string($scope) ? [$scope] : $scope, $clientScopes ?? []));
+
+        return !empty(array_intersect(\is_string($scope) ? [$scope] : $scope, $clientScopes ?? []));
     }
 
     /**
-     * 
-     * @param string $key 
-     * @return mixed 
+     * @param string $key
+     *
+     * @return mixed
      */
     private function getAttribute($key)
     {

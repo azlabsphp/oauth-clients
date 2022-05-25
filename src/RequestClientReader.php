@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Drewlabs package.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drewlabs\AuthorizedClients;
 
 use Drewlabs\AuthorizedClients\Exceptions\UnAuthorizedClientException;
@@ -7,13 +18,12 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class RequestClientReader
 {
-
     /**
-     * Returns a (client, secret) tuple from provided request
-     * 
-     * @param ServerRequestInterface $request
-     * @return array 
-     * @throws UnAuthorizedClientException 
+     * Returns a (client, secret) tuple from provided request.
+     *
+     * @throws UnAuthorizedClientException
+     *
+     * @return array
      */
     public function read(ServerRequestInterface $request)
     {
@@ -21,39 +31,39 @@ class RequestClientReader
         if (null === $client || null === $secret) {
             [$client, $secret] = $this->fromHeaders($request);
         }
+
         return [$client, $secret];
     }
 
-
     /**
-     * Returns a (client, secret) tuple from request cookie
-     * 
-     * @param ServerRequestInterface $request
-     * 
-     * @return array 
+     * Returns a (client, secret) tuple from request cookie.
+     *
+     * @return array
      */
     private function fromCookie(ServerRequestInterface $request)
     {
         $cookies = $request->getCookieParams();
         $clientId = $cookies['clientid'] ?? null;
         $clientSecret = $cookies['clientsecret'] ?? null;
+
         return [$clientId, $clientSecret];
     }
 
     /**
-     * Read a (client, secret) from request headers or request parsed body
-     * 
-     * @param ServerRequestInterface $request
-     * @return array 
-     * @throws UnAuthorizedClientException 
+     * Read a (client, secret) from request headers or request parsed body.
+     *
+     * @throws UnAuthorizedClientException
+     *
+     * @return array
      */
     private function fromHeaders(ServerRequestInterface $request)
     {
         $secret = $this->getAuthSecret($request);
         if (null === $secret) {
-            throw new UnAuthorizedClientException("Missing client secret");
+            throw new UnAuthorizedClientException('Missing client secret');
         }
         $clientId = $this->getClientID($request);
+
         return [$clientId, $secret];
     }
 
@@ -64,14 +74,15 @@ class RequestClientReader
         $secret = $this->getFromHeader($request, 'x-client-secret', '');
         $secret = $secret ?? $this->getFromHeader($request, 'x-authorization-client-secret', '');
         $secret = $secret ?? $this->getFromHeader($request, 'x-authorization-client-token', '');
-        $query = (array)($request->getQueryParams() ?? []);
+        $query = (array) ($request->getQueryParams() ?? []);
         if (null === $secret && isset($query['client_secret'])) {
             return $query['client_secret'];
         }
-        $body = (array)($request->getParsedBody() ?? []);
+        $body = (array) ($request->getParsedBody() ?? []);
         if (null === $secret && isset($body['client_secret'])) {
             return $body['client_secret'];
         }
+
         return $secret;
     }
 
@@ -80,14 +91,15 @@ class RequestClientReader
         $header = $request->getHeader('x-authorization-client-id');
         $header = empty($header) ? $request->getHeader('x-client-id') : $header;
         $clientId = array_pop($header);
-        $query = (array)($request->getQueryParams() ?? []);
+        $query = (array) ($request->getQueryParams() ?? []);
         if (null === $clientId && isset($query['client_id'])) {
             return $query['client_id'];
         }
-        $body = (array)($request->getParsedBody() ?? []);
+        $body = (array) ($request->getParsedBody() ?? []);
         if (null === $clientId && isset($body['client_id'])) {
             return $body['client_id'];
         }
+
         return $clientId;
     }
 
@@ -113,14 +125,16 @@ class RequestClientReader
         if (!$this->startsWith(strtolower($header), $method)) {
             return null;
         }
+
         return trim(str_ireplace($method, '', $header));
     }
 
     private function startsWith(string $haystack, string $needle)
     {
-        if (version_compare(PHP_VERSION, '8.0.0') >= 0) {
+        if (version_compare(\PHP_VERSION, '8.0.0') >= 0) {
             return str_starts_with($haystack, $needle);
         }
+
         return ('' === $needle) || (mb_substr($haystack, 0, mb_strlen($needle)) === $needle);
     }
 }
