@@ -6,6 +6,7 @@ use Closure;
 use Drewlabs\AuthorizedClients\Contracts\ClientValidatorInterface;
 use Drewlabs\AuthorizedClients\Exceptions\UnAuthorizedClientException;
 use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
+use Drewlabs\AuthorizedClients\Contracts\Scope;
 use Drewlabs\AuthorizedClients\Contracts\ScopedClient;
 
 final class AuthorizedClientValidator implements ClientValidatorInterface
@@ -48,7 +49,14 @@ final class AuthorizedClientValidator implements ClientValidatorInterface
 
         if ($client instanceof ScopedClient) {
             if (!$client->hasScope($scopes)) {
-                throw UnAuthorizedClientException::forScopes($client->getKey(), array_diff($client->getScopes(), $scopes));
+                if ($scopes instanceof Scope) {
+                    $scopes = (string)$scopes;
+                }
+                $scopes = is_string($scopes) ? [$scopes] : $scopes;
+                throw UnAuthorizedClientException::forScopes(
+                    $client->getKey(),
+                    array_diff($client->getScopes(), $scopes)
+                );
             }
         }
 
