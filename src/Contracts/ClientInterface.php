@@ -17,6 +17,13 @@ interface ClientInterface
     public function getKey();
 
     /**
+     * Returns the user to which the client belongs to
+     * 
+     * @return string|int|null 
+     */
+    public function getUserID();
+
+    /**
      * Set the ip_addresses attribute of the client
      *
      * @param string|array $value
