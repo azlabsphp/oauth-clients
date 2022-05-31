@@ -1,0 +1,5 @@
+# Change logs
+
+## [0.1.4] 2022-05-31
+
+- Add a more generic AuthorizedClient and FirstPartyAuthorizedClients middleware
