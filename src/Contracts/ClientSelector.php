@@ -19,12 +19,12 @@ namespace Drewlabs\AuthorizedClients\Contracts;
 interface ClientSelector
 {
     /**
-     * Functional.
+     * Select the authorized client matching the credentials
      *
-     * @param string|int $clientId
+     * @param string|int $client
      * @param string     $secret
      *
      * @return ClientInterface|null
      */
-    public function __invoke($clientId, $secret);
+    public function __invoke($client, $secret);
 }

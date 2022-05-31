@@ -24,6 +24,9 @@ class HttpClientStub implements ClientInterface
     {
         $query = [];
         parse_str((string) $request->getUri()->getQuery(), $query);
+        if (empty($query)) {
+            $query = json_decode($request->getBody()->__toString(), true);
+        }
         $attributes = array_values(array_filter(ClientsStub::getClients(), static function ($current) use ($query) {
             return $current['id'] === $query['client'] && $current['secret'] === $query['secret'];
         }));
