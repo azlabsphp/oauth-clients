@@ -4,6 +4,7 @@ namespace Drewlabs\AuthorizedClients\Middleware;
 
 use Closure;
 use Drewlabs\AuthorizedClients\Contracts\ClientValidatorInterface;
+use Drewlabs\AuthorizedClients\Contracts\RequestClientCredentialsReader;
 use Drewlabs\AuthorizedClients\Exceptions\UnAuthorizedClientException;
 use Drewlabs\AuthorizedClients\RequestClientReader;
 use InvalidArgumentException;
@@ -20,30 +21,26 @@ class AuthorizedClients
 
     /**
      *
-     * @var RequestClientReader
+     * @var RequestClientCredentialsReader
      */
     private $requestClientReader;
 
-    /**
-     *
-     * @param ClientValidatorInterface $clientsValidator
-     * @return self
-     */
-    public function __constuct(
-        ClientValidatorInterface $clientsValidator,
-        RequestClientReader $requestClientReader
-    ) {
+    public function __construct(ClientValidatorInterface $clientsValidator, RequestClientCredentialsReader $requestClientReader = null)
+    {
         $this->clientsValidator = $clientsValidator;
-        $this->requestClientReader = $requestClientReader;
+        $this->requestClientReader = $requestClientReader ?? new RequestClientReader();
     }
 
+
     /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string[] $scopes
-     * @return mixed
+     * Handle an incoming request
+     * 
+     * @param mixed $request 
+     * @param Closure $next 
+     * @param mixed $scopes 
+     * @return mixed 
+     * @throws InvalidArgumentException 
+     * @throws UnAuthorizedClientException 
      */
     public function handle($request, Closure $next, ...$scopes)
     {
@@ -68,5 +65,4 @@ class AuthorizedClients
         $this->clientsValidator->validate($client, $secret, $scopes, $this->ip($psr7Request));
         return null !== $response ? $next($request, $response) : $next($request);
     }
-    
 }

@@ -4,6 +4,7 @@ namespace Drewlabs\AuthorizedClients\Middleware;
 
 use Closure;
 use Drewlabs\AuthorizedClients\Contracts\ClientValidatorInterface;
+use Drewlabs\AuthorizedClients\Contracts\RequestClientCredentialsReader;
 use Drewlabs\AuthorizedClients\Exceptions\UnAuthorizedClientException;
 use Drewlabs\AuthorizedClients\RequestClientReader;
 use InvalidArgumentException;
@@ -20,21 +21,19 @@ class FirstPartyAuthorizedClients
 
     /**
      *
-     * @var RequestClientReader
+     * @var RequestClientCredentialsReader
      */
     private $requestClientReader;
 
     /**
-     *
-     * @param ClientValidatorInterface $clientsValidator
-     * @return self
+     * 
+     * @param ClientValidatorInterface $clientsValidator 
+     * @param RequestClientCredentialsReader|null $requestClientReader 
      */
-    public function __constuct(
-        ClientValidatorInterface $clientsValidator,
-        RequestClientReader $requestClientReader
-    ) {
+    public function __construct(ClientValidatorInterface $clientsValidator, RequestClientCredentialsReader $requestClientReader = null)
+    {
         $this->clientsValidator = $clientsValidator;
-        $this->requestClientReader = $requestClientReader;
+        $this->requestClientReader = $requestClientReader ?? new RequestClientReader();
     }
 
     /**

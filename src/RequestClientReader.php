@@ -13,18 +13,14 @@ declare(strict_types=1);
 
 namespace Drewlabs\AuthorizedClients;
 
+use Drewlabs\AuthorizedClients\Contracts\RequestClientCredentialsReader;
 use Drewlabs\AuthorizedClients\Exceptions\UnAuthorizedClientException;
 use Psr\Http\Message\ServerRequestInterface;
 
-class RequestClientReader
+/** @package Drewlabs\AuthorizedClients */
+class RequestClientReader implements RequestClientCredentialsReader
 {
-    /**
-     * Returns a (client, secret) tuple from provided request.
-     *
-     * @throws UnAuthorizedClientException
-     *
-     * @return array
-     */
+
     public function read(ServerRequestInterface $request)
     {
         [$client, $secret] = $this->fromCookie($request);
