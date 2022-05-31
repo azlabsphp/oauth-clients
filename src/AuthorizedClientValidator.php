@@ -49,11 +49,11 @@ final class AuthorizedClientValidator implements ClientValidatorInterface
         $client = ($this->selectorFunc)($clientId, $secret);
         // Check if client is NULL
         if (null === $client) {
-            throw new UnAuthorizedClientException();
+            throw new UnAuthorizedClientException('client not found');
         }
 
         if ($client->isRevoked()) {
-            throw new UnAuthorizedClientException('Client has been revoked');
+            throw new UnAuthorizedClientException('client has been revoked');
         }
 
         if ($client instanceof ScopedClient) {
@@ -79,7 +79,7 @@ final class AuthorizedClientValidator implements ClientValidatorInterface
             // // Return the closure handler for the next middleware
             // Get the request IP address
             if (!\in_array($requestIp, $ips, true)) {
-                throw new UnAuthorizedClientException('Invalid request source');
+                throw new UnAuthorizedClientException('invalid request source');
             }
         }
 
