@@ -16,11 +16,13 @@ use Drewlabs\AuthorizedClients\HttpSelector;
 use Drewlabs\AuthorizedClients\Tests\HttpClientStub;
 use PHPUnit\Framework\TestCase;
 
+use function Drewlabs\AuthorizedClients\Proxy\useHTTPSelector;
+
 class HttpSelectorTest extends TestCase
 {
     private function createSelector()
     {
-        return HttpSelector::using(new HttpClientStub())->withCredentials('<CLIENT_ID>', '<CLIENT_SECRET>');
+        return useHTTPSelector(new HttpClientStub(), '<LOCALHOST>')('<CLIENT_ID>', '<CLIENT_SECRET>');
     }
 
     public function test_invoke_return_instance_of_client()
