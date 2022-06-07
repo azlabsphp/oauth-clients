@@ -7,3 +7,7 @@
 ## [0.1.5] 2022-05-31
 
 - Rewrite the HttpSelector class to include authorization headers
+
+## [0.1.6] 2022-06-07
+
+- Added a useHTTPSelector proxy function
