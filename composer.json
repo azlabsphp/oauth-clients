@@ -1,6 +1,6 @@
 {
     "name": "drewlabs/authorized-clients",
-    "description": "Provides core interfaces for working with server authorized clients, along with a generic client validator class",
+    "description": "Provides abstractions for working with server authorized clients",
     "type": "library",
     "license": "MIT",
     "keywords": [
