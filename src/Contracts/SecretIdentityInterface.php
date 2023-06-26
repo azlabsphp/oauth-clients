@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Drewlabs package.
+ * This file is part of the drewlabs namespace.
  *
  * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
  *
@@ -13,19 +13,15 @@ declare(strict_types=1);
 
 namespace Drewlabs\AuthorizedClients\Contracts;
 
-interface ScopedClient
+interface SecretIdentityInterface
 {
     /**
-     * Returns the list of scopes defines on the array.
-     *
-     * @return string[]|array
+     * returns the string representation of the identity instance.
      */
-    public function getScopes();
+    public function __toString(): string;
 
     /**
-     * @param Scope|string|string[] $scope
-     *
-     * @return bool
+     * returns the secret value from of the identity instance.
      */
-    public function hasScope($scope);
+    public function getSecret(): string;
 }

@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Drewlabs package.
+ * This file is part of the drewlabs namespace.
  *
  * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
  *
@@ -13,15 +13,12 @@ declare(strict_types=1);
 
 namespace Drewlabs\AuthorizedClients\Contracts;
 
-/**
- * Type definition for complex scope implementation.
- */
-interface Scope
+interface CredentialsIdentityInterface extends SecretIdentityInterface
 {
     /**
-     * Returns the string representation of the scope object.
+     * returns `id` of the credentials instance.
      *
-     * @return string
+     * @return string|int
      */
-    public function __toString();
+    public function getId();
 }

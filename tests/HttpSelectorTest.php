@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Drewlabs package.
+ * This file is part of the drewlabs namespace.
  *
  * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
  *
@@ -11,24 +11,19 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
-use Drewlabs\AuthorizedClients\HttpSelector;
-use Drewlabs\AuthorizedClients\Tests\HttpClientStub;
-use PHPUnit\Framework\TestCase;
+namespace Drewlabs\AuthorizedClients\Tests;
 
-use function Drewlabs\AuthorizedClients\Proxy\useHTTPSelector;
+use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
+use Drewlabs\AuthorizedClients\Credentials;
+use Nyholm\Psr7\Factory\Psr17Factory;
+use PHPUnit\Framework\TestCase;
 
 class HttpSelectorTest extends TestCase
 {
-    private function createSelector()
-    {
-        return useHTTPSelector(new HttpClientStub(), '<LOCALHOST>')('<CLIENT_ID>', '<CLIENT_SECRET>');
-    }
-
     public function test_invoke_return_instance_of_client()
     {
-        $selector = $this->createSelector();
-        $client = $selector->__invoke('bdcf5a49-341e-4688-8bba-755237ecfaa1', '02afd968d07c308b6eda2fcf5915878a079f1bbf');
+        $http = $this->createSelector();
+        $client = $http->__invoke(new Credentials('bdcf5a49-341e-4688-8bba-755237ecfaa1', '02afd968d07c308b6eda2fcf5915878a079f1bbf'));
         $this->assertInstanceOf(ClientInterface::class, $client);
         $this->assertTrue($client->firstParty());
         $this->assertFalse($client->isRevoked());
@@ -37,8 +32,20 @@ class HttpSelectorTest extends TestCase
     public function test_invoke_return_null()
     {
         $selector = $this->createSelector();
-        $client = $selector->__invoke('bdcf5a49-341e-4688-8bba-755237ecfaa1', '02afd968d07c308b6eda2fcf5915878a079f1f');
+        $client = $selector->__invoke(new Credentials('bdcf5a49-341e-4688-8bba-755237ecfaa1', '02afd968d07c308b6eda2fcf5915878a079f1f'));
         $this->assertNotInstanceOf(ClientInterface::class, $client);
         $this->assertNull($client);
+    }
+
+    private function createSelector()
+    {
+        $client = new HttpQueryClientStub(new HttpClientStub(), new Psr17Factory(), new Psr17Factory());
+
+        $client
+            ->setUrl('<LOCALHOST>')
+            ->addHeader('x-client-id', '<CLIENT_ID>')
+            ->addHeader('x-client-secret', '<CLIENT_SECRET>');
+
+        return $client;
     }
 }

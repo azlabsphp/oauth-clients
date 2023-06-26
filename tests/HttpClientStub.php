@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Drewlabs package.
+ * This file is part of the drewlabs namespace.
  *
  * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
  *
@@ -33,6 +33,7 @@ class HttpClientStub implements ClientInterface
         if (!empty($attributes)) {
             return new Response(200, [], json_encode($attributes[0]));
         }
+
         return new Response(404);
     }
 }

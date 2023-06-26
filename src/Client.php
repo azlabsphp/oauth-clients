@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Drewlabs package.
+ * This file is part of the drewlabs namespace.
  *
  * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
  *
@@ -14,10 +14,9 @@ declare(strict_types=1);
 namespace Drewlabs\AuthorizedClients;
 
 use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
-use Drewlabs\AuthorizedClients\Contracts\Scope;
-use Drewlabs\AuthorizedClients\Contracts\ScopedClient;
+use Drewlabs\AuthorizedClients\Contracts\ScopeInterface;
 
-class Client implements ClientInterface, ScopedClient
+class Client implements ClientInterface
 {
     /**
      * List of class attributes.
@@ -27,9 +26,7 @@ class Client implements ClientInterface, ScopedClient
     private $attributes = [];
 
     /**
-     * Constructor function.
-     *
-     * @return self
+     * Creates class instance.
      */
     public function __construct(array $attributes = [])
     {
@@ -58,26 +55,24 @@ class Client implements ClientInterface, ScopedClient
 
     public function firstParty()
     {
-        return (bool) ($this->getAttribute('personal_access_client')) ||
-            (bool) ($this->getAttribute('password_client'));
+        return (bool) $this->getAttribute('personal_access_client') || (bool) $this->getAttribute('password_client');
     }
 
     public function isRevoked()
     {
-        return (bool) ($this->getAttribute('revoked'));
+        return (bool) $this->getAttribute('revoked');
     }
 
-    public function getScopes()
+    public function getScopes(): array
     {
-        $scopes = $this->getAttribute('scopes');
-        if (\is_string($scopes)) {
-            return json_decode($scopes);
+        if (\is_string($scopes = $this->getAttribute('scopes'))) {
+            return json_decode($scopes, true);
         }
 
         return $scopes ?? [];
     }
 
-    public function hasScope($scope)
+    public function hasScope($scope): bool
     {
         $clientScopes = $this->getScopes() ?? ['*'];
         if (\in_array('*', $clientScopes, true)) {
@@ -86,7 +81,7 @@ class Client implements ClientInterface, ScopedClient
         if (empty($scope)) {
             return true;
         }
-        if ($scope instanceof Scope) {
+        if ($scope instanceof ScopeInterface) {
             $scope = (string) $scope;
         }
 
@@ -94,12 +89,12 @@ class Client implements ClientInterface, ScopedClient
     }
 
     /**
-     * @param string $key
+     * Provides an interface for resolving attributes from `$attributes` array.
      *
      * @return mixed
      */
-    private function getAttribute($key)
+    private function getAttribute(string $name)
     {
-        return $this->attributes[$key] ?? null;
+        return $this->attributes[$name] ?? null;
     }
 }

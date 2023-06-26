@@ -11,4 +11,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-require_once __DIR__.'/../vendor/autoload.php';
+namespace Drewlabs\AuthorizedClients\Contracts;
+
+/**
+ * Type definition for complex scope implementation.
+ */
+interface ScopeInterface
+{
+    /**
+     * Returns the string representation of the scope object.
+     */
+    public function __toString(): string;
+}

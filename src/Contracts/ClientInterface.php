@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the Drewlabs package.
+ * This file is part of the drewlabs namespace.
  *
  * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
  *
@@ -46,16 +46,30 @@ interface ClientInterface
     public function getIpAddressesAttribute();
 
     /**
-     * Checks is the client is a first party client.
+     * check if the client is a first party client.
      *
      * @return bool
      */
     public function firstParty();
 
     /**
-     * Returns true if the client is revoked and false if not.
+     * returns true if the client is revoked and false if not.
      *
      * @return bool
      */
     public function isRevoked();
+
+    /**
+     * returns the list of scopes defines on the array.
+     *
+     * @return string[]|array
+     */
+    public function getScopes(): array;
+
+    /**
+     * checks if client has a given scope.
+     *
+     * @param ScopeInterface|string|string[] $scope
+     */
+    public function hasScope($scope): bool;
 }
