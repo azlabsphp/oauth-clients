@@ -16,7 +16,7 @@ namespace Drewlabs\AuthorizedClients\Contracts;
 use Drewlabs\AuthorizedClients\Exceptions\AuthorizationException;
 use Psr\Http\Message\ServerRequestInterface;
 
-interface CredentialsFactory
+interface CredentialsFactoryInterface
 {
     /**
      * Returns a (client, secret) tuple from provided request.

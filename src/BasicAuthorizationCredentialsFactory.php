@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Drewlabs\AuthorizedClients;
 
-use Drewlabs\AuthorizedClients\Contracts\CredentialsFactory;
+use Drewlabs\AuthorizedClients\Contracts\CredentialsFactoryInterface;
 use Drewlabs\AuthorizedClients\Exceptions\AuthorizationException;
 use Psr\Http\Message\ServerRequestInterface;
 
-class BasicAuthorizationCredentialsFactory implements CredentialsFactory
+class BasicAuthorizationCredentialsFactory implements CredentialsFactoryInterface
 {
     use InteractWithServerRequest;
 
