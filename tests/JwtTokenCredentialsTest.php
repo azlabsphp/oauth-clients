@@ -36,7 +36,7 @@ class JwtTokenCredentialsTest extends TestCase
         $this->assertEquals(3, count(explode('.', $jwtToken)));
     }
 
-    public function test_jwt_token_credetials_decode()
+    public function test_jwt_token_credentials_decode()
     {
         $credentials = new JwtTokenCredentials('SuperSecretPassword');
         $jwtToken = (string)($credentials->withPayload('apikey', 'apiSecret'));
