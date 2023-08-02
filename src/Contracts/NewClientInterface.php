@@ -16,6 +16,13 @@ namespace Drewlabs\Oauth\Clients\Contracts;
 interface NewClientInterface
 {
     /**
+     * Returns client `id` property for existing clients
+     * 
+     * @return null|string 
+     */
+    public function getId(): ?string;
+
+    /**
      * Returns app client name value.
      */
     public function getName(): ?string;
@@ -70,4 +77,18 @@ interface NewClientInterface
      * @return array
      */
     public function getScopes(): ?array;
+
+    /**
+     * Returns a boolean value for whether the client is a password client or not
+     * 
+     * @return bool 
+     */
+    public function isPasswordClient(): bool;
+
+    /**
+     * Returns a boolean value for whether the client is a password client or not
+     * 
+     * @return bool 
+     */
+    public function isPersonalClient(): bool;
 }

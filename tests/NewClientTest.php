@@ -111,4 +111,50 @@ class NewClientTest extends TestCase
         // Assert
         $this->assertSame(['app:posts:list'], $client->getScopes());
     }
+
+    public function test_new_client_with_second_parameter_true_creates_a_personal_access_client()
+    {
+        // Act
+        $client = (new NewClient(null, true));
+
+        // Assert
+        $this->assertTrue($client->isPersonalClient());
+
+        // Act
+        $client2 = (new NewClient(null, false));
+
+        $this->assertFalse($client2->isPersonalClient());
+    }
+
+    public function test_new_client_with_no_argument_create_a_client_that_is_not_personal_client()
+    {
+        // Act
+        $client = new NewClient;
+
+        // Assert
+        $this->assertFalse($client->isPersonalClient());
+    }
+
+    public function test_new_client_with_third_parameter_true_creates_a_personal_access_client()
+    {
+        // Act
+        $client = (new NewClient(null, false, true));
+
+        // Assert
+        $this->assertTrue($client->isPasswordClient());
+
+        // Act
+        $client2 = (new NewClient(null, false, false));
+
+        $this->assertFalse($client2->isPasswordClient());
+    }
+
+    public function test_new_client_with_no_argument_create_a_client_that_is_not_password_client()
+    {
+        // Act
+        $client = new NewClient;
+
+        // Assert
+        $this->assertFalse($client->isPasswordClient());
+    }
 }
