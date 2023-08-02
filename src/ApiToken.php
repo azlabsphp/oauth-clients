@@ -11,9 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients;
+namespace Drewlabs\Oauth\Clients;
 
-use Drewlabs\AuthorizedClients\Contracts\SecretIdentityInterface;
+use Drewlabs\Oauth\Clients\Contracts\SecretIdentityInterface;
 
 class ApiToken implements SecretIdentityInterface
 {

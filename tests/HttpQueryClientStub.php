@@ -11,11 +11,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients\Tests;
+namespace Drewlabs\Oauth\Clients\Tests;
 
-use Drewlabs\AuthorizedClients\Client;
-use Drewlabs\AuthorizedClients\Contracts\ClientQueryInterface;
-use Drewlabs\AuthorizedClients\Contracts\CredentialsIdentityInterface;
+use Drewlabs\Oauth\Clients\Client;
+use Drewlabs\Oauth\Clients\Contracts\ClientQueryInterface;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;

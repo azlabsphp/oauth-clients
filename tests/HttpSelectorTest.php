@@ -11,10 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients\Tests;
+namespace Drewlabs\Oauth\Clients\Tests;
 
-use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
-use Drewlabs\AuthorizedClients\Credentials;
+use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
+use Drewlabs\Oauth\Clients\Credentials;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 

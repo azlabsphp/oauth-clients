@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Drewlabs\AuthorizedClients\ApiToken;
+use Drewlabs\Oauth\Clients\ApiToken;
 use PHPUnit\Framework\TestCase;
 
 class ApiTokenTest extends TestCase

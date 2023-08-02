@@ -1,6 +1,6 @@
 <?php
 
-use Drewlabs\AuthorizedClients\JwtHeader;
+use Drewlabs\Oauth\Clients\JwtHeader;
 use PHPUnit\Framework\TestCase;
 
 class JwtHeaderTest extends TestCase

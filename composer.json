@@ -9,12 +9,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Drewlabs\\AuthorizedClients\\": "src/"
+            "Drewlabs\\Oauth\\Clients\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Drewlabs\\AuthorizedClients\\Tests\\": "tests/"
+            "Drewlabs\\Oauth\\Clients\\Tests\\": "tests/"
         }
     },
     "authors": [

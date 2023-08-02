@@ -11,8 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Drewlabs\AuthorizedClients\Client;
-use Drewlabs\AuthorizedClients\Tests\ClientsStub;
+use Drewlabs\Oauth\Clients\Client;
+use Drewlabs\Oauth\Clients\Tests\ClientsStub;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase

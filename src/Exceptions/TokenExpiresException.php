@@ -11,9 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients\Exceptions;
+namespace Drewlabs\Oauth\Clients\Exceptions;
 
-use Drewlabs\AuthorizedClients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 
 class TokenExpiresException extends AuthorizationException
 {

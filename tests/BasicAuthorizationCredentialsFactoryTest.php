@@ -1,10 +1,10 @@
 <?php
 
-use Drewlabs\AuthorizedClients\BasicAuthCredentials;
+use Drewlabs\Oauth\Clients\BasicAuthCredentials;
 use PHPUnit\Framework\TestCase;
 
-use Drewlabs\AuthorizedClients\BasicAuthorizationCredentialsFactory;
-use Drewlabs\AuthorizedClients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\BasicAuthorizationCredentialsFactory;
+use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 

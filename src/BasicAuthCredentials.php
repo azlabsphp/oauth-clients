@@ -11,11 +11,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients;
+namespace Drewlabs\Oauth\Clients;
 
-use Drewlabs\AuthorizedClients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\AuthorizedClients\Exceptions\DecodeTokenException;
-use Drewlabs\AuthorizedClients\Exceptions\MalformedBasicAuthException;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
+use Drewlabs\Oauth\Clients\Exceptions\DecodeTokenException;
+use Drewlabs\Oauth\Clients\Exceptions\MalformedBasicAuthException;
 
 class BasicAuthCredentials implements CredentialsIdentityInterface
 {

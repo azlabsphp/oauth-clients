@@ -11,9 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients\Contracts;
+namespace Drewlabs\Oauth\Clients\Contracts;
 
-use Drewlabs\AuthorizedClients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Psr\Http\Message\ServerRequestInterface;
 
 interface CredentialsFactoryInterface

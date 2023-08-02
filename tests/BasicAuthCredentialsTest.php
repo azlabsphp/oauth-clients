@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Drewlabs\AuthorizedClients\BasicAuthCredentials;
+use Drewlabs\Oauth\Clients\BasicAuthCredentials;
 use PHPUnit\Framework\TestCase;
 
 class BasicAuthCredentialsTest extends TestCase

@@ -11,10 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients\Tests;
+namespace Drewlabs\Oauth\Clients\Tests;
 
-use Drewlabs\AuthorizedClients\JsonDecode;
-use Drewlabs\AuthorizedClients\JsonEncode;
+use Drewlabs\Oauth\Clients\JsonDecode;
+use Drewlabs\Oauth\Clients\JsonEncode;
 use PHPUnit\Framework\TestCase;
 
 class JsonDecoderTest extends TestCase

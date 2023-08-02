@@ -1,6 +1,6 @@
 <?php
 
-use Drewlabs\AuthorizedClients\JwtPayload;
+use Drewlabs\Oauth\Clients\JwtPayload;
 use PHPUnit\Framework\TestCase;
 
 class JwtPayloadTest extends TestCase

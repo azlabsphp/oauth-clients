@@ -1,9 +1,9 @@
 <?php
 
-use Drewlabs\AuthorizedClients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\AuthorizedClients\Exceptions\AuthorizationException;
-use Drewlabs\AuthorizedClients\JwtCookieCredentialsFactory;
-use Drewlabs\AuthorizedClients\JwtTokenCredentials;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
+use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\JwtCookieCredentialsFactory;
+use Drewlabs\Oauth\Clients\JwtTokenCredentials;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use PHPUnit\Framework\TestCase;

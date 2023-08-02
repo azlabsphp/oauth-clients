@@ -11,14 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients;
+namespace Drewlabs\Oauth\Clients;
 
 use BadMethodCallException;
 use DateTimeImmutable;
-use Drewlabs\AuthorizedClients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\AuthorizedClients\Exceptions\InvalidTokenException;
-use Drewlabs\AuthorizedClients\Exceptions\InvalidTokenSignatureException;
-use Drewlabs\AuthorizedClients\Exceptions\TokenExpiresException;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
+use Drewlabs\Oauth\Clients\Exceptions\InvalidTokenException;
+use Drewlabs\Oauth\Clients\Exceptions\InvalidTokenSignatureException;
+use Drewlabs\Oauth\Clients\Exceptions\TokenExpiresException;
 
 class JwtTokenCredentials implements CredentialsIdentityInterface
 {

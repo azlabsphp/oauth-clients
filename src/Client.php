@@ -11,10 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients;
+namespace Drewlabs\Oauth\Clients;
 
-use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
-use Drewlabs\AuthorizedClients\Contracts\ScopeInterface;
+use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
+use Drewlabs\Oauth\Clients\Contracts\ScopeInterface;
 
 class Client implements ClientInterface
 {

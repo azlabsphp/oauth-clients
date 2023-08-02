@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients\Contracts;
+namespace Drewlabs\Oauth\Clients\Contracts;
 
 /**
  * @method ClientInterface validate($clientId, $secret, $scopes = [], $requestIp = null)

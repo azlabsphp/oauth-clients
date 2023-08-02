@@ -11,11 +11,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Drewlabs\AuthorizedClients;
+namespace Drewlabs\Oauth\Clients;
 
-use Drewlabs\AuthorizedClients\Contracts\CredentialsFactoryInterface;
-use Drewlabs\AuthorizedClients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\AuthorizedClients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
+use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface

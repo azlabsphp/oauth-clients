@@ -11,12 +11,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use Drewlabs\AuthorizedClients\Contracts\ClientInterface;
-use Drewlabs\AuthorizedClients\Credentials;
-use Drewlabs\AuthorizedClients\CredentialsValidator;
-use Drewlabs\AuthorizedClients\Exceptions\AuthorizationException;
-use Drewlabs\AuthorizedClients\Tests\HttpClientStub;
-use Drewlabs\AuthorizedClients\Tests\HttpQueryClientStub;
+use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
+use Drewlabs\Oauth\Clients\Credentials;
+use Drewlabs\Oauth\Clients\CredentialsValidator;
+use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\Tests\HttpClientStub;
+use Drewlabs\Oauth\Clients\Tests\HttpQueryClientStub;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 

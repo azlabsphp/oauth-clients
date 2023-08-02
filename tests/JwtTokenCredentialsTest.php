@@ -1,8 +1,8 @@
 <?php
 
-use Drewlabs\AuthorizedClients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\AuthorizedClients\Exceptions\TokenExpiresException;
-use Drewlabs\AuthorizedClients\JwtTokenCredentials;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
+use Drewlabs\Oauth\Clients\Exceptions\TokenExpiresException;
+use Drewlabs\Oauth\Clients\JwtTokenCredentials;
 use PHPUnit\Framework\TestCase;
 
 class JwtTokenCredentialsTest extends TestCase
