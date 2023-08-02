@@ -1,13 +1,10 @@
 # Change logs
 
-## [0.1.4] 2022-05-31
+## [0.2.1]
 
-- Add a more generic AuthorizedClient and FirstPartyAuthorizedClients middleware
+- Added `ClientsRepository` contract declaration
+- Added `NewClientInterface` constract declaration
 
-## [0.1.5] 2022-05-31
+## [0.2.2] 2023-08-02
 
-- Rewrite the HttpSelector class to include authorization headers
-
-## [0.1.6] 2022-06-07
-
-- Added a useHTTPSelector proxy function
+- Added `PlainTextSecretAware` contract
