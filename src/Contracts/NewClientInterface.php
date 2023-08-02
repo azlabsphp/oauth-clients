@@ -1,76 +1,73 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the drewlabs namespace.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drewlabs\Oauth\Clients\Contracts;
 
 interface NewClientInterface
 {
     /**
-     * Returns app client name value
-     * 
-     * @return null|string 
+     * Returns app client name value.
      */
     public function getName(): ?string;
 
     /**
-     * Returns client user id value
-     * 
-     * @return null|string 
+     * Returns client user id value.
      */
     public function getUserId(): ?string;
 
     /**
-     * Returns client redirect url value
-     * 
-     * @return null|string 
+     * Returns client redirect url value.
      */
     public function getRedirectUrl(): ?string;
 
     /**
-     * Returns client provider value
-     * 
-     * @return string 
+     * Returns client provider value.
+     *
+     * @return string
      */
     public function getProvider(): ?string;
 
     /**
-     * Returns client authorized ip address value
-     * 
-     * @return array 
+     * Returns client authorized ip address value.
+     *
+     * @return array
      */
     public function getIpAddresses(): ?array;
 
     /**
-     * Returns client authorization secret value
-     * 
-     * @return null|string 
+     * Returns client authorization secret value.
      */
     public function getSecret(): ?string;
 
     /**
-     * Returns client app host url value
-     * 
-     * @return null|string 
+     * Returns client app host url value.
      */
     public function getAppUrl(): ?string;
 
     /**
-     * Returns a boolean value indicating if client is revoked or not
-     * 
-     * @return null|bool 
+     * Returns a boolean value indicating if client is revoked or not.
      */
     public function getRevoked(): ?bool;
 
     /**
-     * Returns client expiration date time string
-     * 
-     * @return null|string 
+     * Returns client expiration date time string.
      */
     public function getExpiresAt(): ?string;
 
     /**
-     * Return list of client scopes
-     * 
-     * @return array 
+     * Return list of client scopes.
+     *
+     * @return array
      */
     public function getScopes(): ?array;
 }

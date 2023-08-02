@@ -16,10 +16,9 @@ namespace Drewlabs\Oauth\Clients;
 class JsonDecode
 {
     /**
-     * 
      * @var bool
      */
-    private $associative =  false;
+    private $associative = false;
 
     /**
      * @var int
@@ -32,26 +31,24 @@ class JsonDecode
     private $depth;
 
     /**
-     * creates class instance
-     * 
-     * @param bool $associative 
-     * @param int $flags 
-     * @param int $depth 
-     * @return void 
+     * creates class instance.
+     *
+     * @param bool $associative
+     *
+     * @return void
      */
     public function __construct($associative = false, int $flags = 0, int $depth = 512)
     {
         $this->flags = $flags;
         $this->depth = $depth;
         $this->associative = $associative;
-        
+
     }
 
     /**
-     * funtional interface for json decoding string
-     * 
-     * @param string $encoded 
-     * @return mixed 
+     * funtional interface for json decoding string.
+     *
+     * @return mixed
      */
     public function __invoke(string $encoded)
     {
@@ -59,10 +56,9 @@ class JsonDecode
     }
 
     /**
-     * return a decoded string data
-     * 
-     * @param string $encoded 
-     * @return mixed 
+     * return a decoded string data.
+     *
+     * @return mixed
      */
     public function call(string $encoded)
     {

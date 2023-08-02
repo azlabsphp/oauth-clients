@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Exceptions;
 
-
 class InvalidTokenException extends AuthorizationException
 {
     /**
@@ -22,11 +21,9 @@ class InvalidTokenException extends AuthorizationException
     private $token;
 
     /**
-     * creates class instance
-     * 
-     * @param string $token
-     * 
-     * @return void 
+     * creates class instance.
+     *
+     * @return void
      */
     public function __construct(string $token)
     {
@@ -35,11 +32,10 @@ class InvalidTokenException extends AuthorizationException
         $this->token = $token;
     }
 
-
     /**
-     * returns the token property value
-     * 
-     * @return string 
+     * returns the token property value.
+     *
+     * @return string
      */
     public function getToken()
     {

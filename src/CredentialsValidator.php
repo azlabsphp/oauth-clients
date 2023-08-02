@@ -15,12 +15,12 @@ namespace Drewlabs\Oauth\Clients;
 
 use Closure;
 use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
+use Drewlabs\Oauth\Clients\Contracts\ClientQueryInterface;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityValidator;
 use Drewlabs\Oauth\Clients\Contracts\ScopeInterface;
 use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Drewlabs\Oauth\Clients\Exceptions\MissingScopesException;
-use Drewlabs\Oauth\Clients\Contracts\ClientQueryInterface;
 
 final class CredentialsValidator implements CredentialsIdentityValidator
 {
@@ -31,9 +31,8 @@ final class CredentialsValidator implements CredentialsIdentityValidator
 
     /**
      * @param \Closure|ClientQueryInterface $selectorFunc This function will be used to select client from datasource
-     *                                              using the clientId and clientSecret as parameters. This means that the selector function
-     *                                              must accept the clientId and clientSecret as arguments
-     *
+     *                                                    using the clientId and clientSecret as parameters. This means that the selector function
+     *                                                    must accept the clientId and clientSecret as arguments
      */
     public function __construct($selectorFunc)
     {

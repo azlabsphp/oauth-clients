@@ -14,9 +14,8 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\NewClientInterface;
-use JsonSerializable;
 
-class NewClient implements NewClientInterface, JsonSerializable
+class NewClient implements NewClientInterface, \JsonSerializable
 {
     /**
      * List of class attributes.
@@ -39,11 +38,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set `name` property value
-     * 
-     * @param string|null $value
-     * 
-     * @return static 
+     * Set `name` property value.
+     *
+     * @return static
      */
     public function setName(string $value = null)
     {
@@ -58,11 +55,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set `user id` property value
-     * 
-     * @param string|null $value
-     * 
-     * @return static 
+     * Set `user id` property value.
+     *
+     * @return static
      */
     public function setUserId(string $value = null)
     {
@@ -77,11 +72,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set `redirect` property value
-     * 
-     * @param string|null $value
-     * 
-     * @return static 
+     * Set `redirect` property value.
+     *
+     * @return static
      */
     public function setRedirectUrl(string $value = null)
     {
@@ -96,11 +89,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set `provider` property value
-     * 
-     * @param string|null $value
-     * 
-     * @return static 
+     * Set `provider` property value.
+     *
+     * @return static
      */
     public function setProvider(string $value = null)
     {
@@ -115,11 +106,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set `ip addresses` property value
-     * 
-     * @param array|null $value
-     * 
-     * @return static 
+     * Set `ip addresses` property value.
+     *
+     * @return static
      */
     public function setIpAddresses(array $value = null)
     {
@@ -134,11 +123,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set `secret` property value
-     * 
-     * @param string|null $value
-     * 
-     * @return static 
+     * Set `secret` property value.
+     *
+     * @return static
      */
     public function setSecret(string $value = null)
     {
@@ -153,11 +140,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set `app url` property value
-     * 
-     * @param string|null $value
-     * 
-     * @return static 
+     * Set `app url` property value.
+     *
+     * @return static
      */
     public function setAppUrl(string $value = null)
     {
@@ -168,15 +153,13 @@ class NewClient implements NewClientInterface, JsonSerializable
 
     public function getRevoked(): ?bool
     {
-        return boolval($this->getAttribute('revoked'));
+        return (bool) $this->getAttribute('revoked');
     }
 
     /**
-     * Set `revoked` property value
-     * 
-     * @param bool|null $value
-     * 
-     * @return static 
+     * Set `revoked` property value.
+     *
+     * @return static
      */
     public function setRevoked(bool $value = null)
     {
@@ -191,11 +174,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set client `expires on` property value
-     * 
-     * @param string|null $value
-     * 
-     * @return static 
+     * Set client `expires on` property value.
+     *
+     * @return static
      */
     public function setExpiresAt(string $value = null)
     {
@@ -210,11 +191,9 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Set `ip addresses` property value
-     * 
-     * @param array|null $value
-     * 
-     * @return static 
+     * Set `ip addresses` property value.
+     *
+     * @return static
      */
     public function setScopes(array $value = null)
     {
@@ -224,34 +203,7 @@ class NewClient implements NewClientInterface, JsonSerializable
     }
 
     /**
-     * Return an attribute value if exists or `null` if not exists
-     * 
-     * @param string $name 
-     * @return mixed|null
-     */
-    private function getAttribute(string $name)
-    {
-        return $this->attributes[$name] ?? null;
-    }
-
-    /**
-     * Set value for a `$name` attributes
-     *  
-     * @param string $name 
-     * @param mixed $value 
-     * @return void 
-     */
-    private function setAttribute(string $name, $value)
-    {
-        if (null === $value) {
-            return;
-        }
-        $this->attributes[$name] = $value;
-    }
-
-    /**
-     * 
-     * @return array 
+     * @return array
      */
     public function toArray()
     {
@@ -262,5 +214,30 @@ class NewClient implements NewClientInterface, JsonSerializable
     public function jsonSerialize()
     {
         return $this->toArray();
+    }
+
+    /**
+     * Return an attribute value if exists or `null` if not exists.
+     *
+     * @return mixed|null
+     */
+    private function getAttribute(string $name)
+    {
+        return $this->attributes[$name] ?? null;
+    }
+
+    /**
+     * Set value for a `$name` attributes.
+     *
+     * @param mixed $value
+     *
+     * @return void
+     */
+    private function setAttribute(string $name, $value)
+    {
+        if (null === $value) {
+            return;
+        }
+        $this->attributes[$name] = $value;
     }
 }

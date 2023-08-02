@@ -21,11 +21,9 @@ class InvalidTokenSignatureException extends AuthorizationException
     private $token;
 
     /**
-     * creates class instance
-     * 
-     * @param string $token
-     * 
-     * @return void 
+     * creates class instance.
+     *
+     * @return void
      */
     public function __construct(string $token)
     {
@@ -34,15 +32,13 @@ class InvalidTokenSignatureException extends AuthorizationException
         $this->token = $token;
     }
 
-
     /**
-     * returns the token property value
-     * 
-     * @return string 
+     * returns the token property value.
+     *
+     * @return string
      */
     public function getToken()
     {
         return $this->token;
     }
-
 }

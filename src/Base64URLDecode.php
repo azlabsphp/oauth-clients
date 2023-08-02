@@ -13,18 +13,14 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients;
 
-
 class Base64URLDecode
 {
-
     public function __construct()
     {
     }
 
     /**
-     * Functional interface to decode a base64 url encoded string
-     * @param string $data 
-     * @return string 
+     * Functional interface to decode a base64 url encoded string.
      */
     public function __invoke(string $base64): string
     {
@@ -32,14 +28,10 @@ class Base64URLDecode
     }
 
     /**
-     * return a decoded base64 url encoded string
-     * 
-     * @param string $data 
-     * @return string 
+     * return a decoded base64 url encoded string.
      */
     public function call(string $base64): string
     {
-        return base64_decode(strtr($base64, '-_', '+/'));
+        return base64_decode(strtr($base64, '-_', '+/'), true);
     }
-
 }

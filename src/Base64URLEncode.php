@@ -15,15 +15,12 @@ namespace Drewlabs\Oauth\Clients;
 
 class Base64URLEncode
 {
-
     public function __construct()
     {
     }
 
     /**
-     * Functional interface to compute a base64 url encoded string
-     * @param string $data 
-     * @return string 
+     * Functional interface to compute a base64 url encoded string.
      */
     public function __invoke(string $data): string
     {
@@ -31,14 +28,12 @@ class Base64URLEncode
     }
 
     /**
-     * return a base64 url encoded string
-     * 
-     * @param string $data 
-     * @return string 
+     * return a base64 url encoded string.
      */
     public function call(string $data): string
     {
         $base64Url = strtr(base64_encode($data), '+/', '-_');
+
         return rtrim($base64Url, '=');
     }
 }

@@ -1,86 +1,94 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the drewlabs namespace.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Drewlabs\Oauth\Clients\NewClient;
 use PHPUnit\Framework\TestCase;
 
 class NewClientTest extends TestCase
 {
-
     public function test_new_client_set_name_set_name_property_value()
     {
         // Act
-        $client = (new NewClient)->setName('Test Client');
+        $client = (new NewClient())->setName('Test Client');
 
         // Assert
-        $this->assertEquals('Test Client', $client->getName());
+        $this->assertSame('Test Client', $client->getName());
     }
-
 
     public function test_new_client_set_user_id_property_value()
     {
         // Initialize
-        $client = (new NewClient)->setName(null);
+        $client = (new NewClient())->setName(null);
 
         // Assert
-        $this->assertEquals(null, $client->getUserId());
+        $this->assertNull($client->getUserId());
 
         // Act
-        $client = $client->setUserId((string)1297);
+        $client = $client->setUserId((string) 1297);
 
         // Assert
-        $this->assertEquals('1297', $client->getUserId());
+        $this->assertSame('1297', $client->getUserId());
     }
 
     public function test_new_client_set_redirect_url_property_value()
     {
         // Act
-        $client = (new NewClient)->setRedirectUrl('https://api.micronaut.app');
+        $client = (new NewClient())->setRedirectUrl('https://api.micronaut.app');
 
         // Assert
-        $this->assertEquals('https://api.micronaut.app', $client->getRedirectUrl());
+        $this->assertSame('https://api.micronaut.app', $client->getRedirectUrl());
     }
 
     public function test_new_client_set_provider_property_value()
     {
         // Act
-        $client = (new NewClient)->setProvider('drewlabs:jwt');
+        $client = (new NewClient())->setProvider('drewlabs:jwt');
 
         // Assert
-        $this->assertEquals('drewlabs:jwt', $client->getProvider());
+        $this->assertSame('drewlabs:jwt', $client->getProvider());
     }
 
-    
     public function test_new_client_set_ip_addresses_property_value()
     {
         // Act
-        $client = (new NewClient)->setIpAddresses(['192.168.10.101', '192.168.10.102']);
+        $client = (new NewClient())->setIpAddresses(['192.168.10.101', '192.168.10.102']);
 
         // Assert
-        $this->assertEquals(['192.168.10.101', '192.168.10.102'], $client->getIpAddresses());
+        $this->assertSame(['192.168.10.101', '192.168.10.102'], $client->getIpAddresses());
     }
-    
+
     public function test_new_client_set_secret_property_value()
     {
         // Act
-        $client = (new NewClient)->setSecret($bytes = random_int(1000, 10000).time());
+        $client = (new NewClient())->setSecret($bytes = random_int(1000, 10000).time());
 
         // Assert
-        $this->assertEquals($bytes, $client->getSecret());
+        $this->assertSame($bytes, $client->getSecret());
     }
-    
+
     public function test_new_client_app_url_property_value()
     {
         // Act
-        $client = (new NewClient)->setAppUrl($host = 'http://localhost:3000');
+        $client = (new NewClient())->setAppUrl($host = 'http://localhost:3000');
 
         // Assert
-        $this->assertEquals($host, $client->getAppUrl());
+        $this->assertSame($host, $client->getAppUrl());
     }
 
     public function test_new_client_set_revoked_property_value()
     {
         // Act
-        $client = (new NewClient)->setRevoked(true);
+        $client = (new NewClient())->setRevoked(true);
 
         // Assert
         $this->assertTrue($client->getRevoked());
@@ -89,18 +97,18 @@ class NewClientTest extends TestCase
     public function test_new_client_set_expires_at_property_value()
     {
         // Act
-        $client = (new NewClient)->setExpiresAt((new DateTimeImmutable)->modify('+1 days')->format('Y-m-d H:i:s'));
+        $client = (new NewClient())->setExpiresAt((new DateTimeImmutable())->modify('+1 days')->format('Y-m-d H:i:s'));
 
         // Assert
-        $this->assertEquals((new DateTimeImmutable)->modify('+1 days')->format('Y-m-d H:i:s'), $client->getExpiresAt());
+        $this->assertSame((new DateTimeImmutable())->modify('+1 days')->format('Y-m-d H:i:s'), $client->getExpiresAt());
     }
 
     public function test_new_client_set_scopes_at_property_value()
     {
         // Act
-        $client = (new NewClient)->setScopes(['app:posts:list']);
+        $client = (new NewClient())->setScopes(['app:posts:list']);
 
         // Assert
-        $this->assertEquals(['app:posts:list'], $client->getScopes());
+        $this->assertSame(['app:posts:list'], $client->getScopes());
     }
 }

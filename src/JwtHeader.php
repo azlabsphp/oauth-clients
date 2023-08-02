@@ -26,10 +26,10 @@ class JwtHeader
     private $typ;
 
     /**
-     * creates class instance
-     * 
-     * @param string $alg 
-     * @param string $typ 
+     * creates class instance.
+     *
+     * @param string $alg
+     * @param string $typ
      */
     public function __construct($alg = 'HS256', $typ = 'JWT')
     {
@@ -38,9 +38,19 @@ class JwtHeader
     }
 
     /**
-     * return `alg` header value
-     * 
-     * @return string 
+     * returns the encoded string of the current class.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->encode();
+    }
+
+    /**
+     * return `alg` header value.
+     *
+     * @return string
      */
     public function getAlg()
     {
@@ -48,8 +58,9 @@ class JwtHeader
     }
 
     /**
-     * return header `typ` value
-     * @return string 
+     * return header `typ` value.
+     *
+     * @return string
      */
     public function getTyp()
     {
@@ -57,35 +68,23 @@ class JwtHeader
     }
 
     /**
-     * creates class instance form encoded string
-     * @param string $encoded 
-     * @return static 
+     * creates class instance form encoded string.
+     *
+     * @return static
      */
     public static function decode(string $encoded)
     {
-        $json = (new Base64URLDecode)($encoded);
-        $object = (new JsonDecode)($json);
+        $json = (new Base64URLDecode())($encoded);
+        $object = (new JsonDecode())($json);
+
         return new static($object->alg, $object->typ);
     }
 
     /**
-     * create encoded string from the current instance
-     * 
-     * @return string 
+     * create encoded string from the current instance.
      */
     public function encode(): string
     {
-        return (new Base64URLEncode)((new JsonEncode)(['alg' => $this->alg, 'typ' => $this->typ]));
+        return (new Base64URLEncode())((new JsonEncode())(['alg' => $this->alg, 'typ' => $this->typ]));
     }
-
-    /**
-     * returns the encoded string of the current class
-     * 
-     * @return string 
-     */
-    public function __toString()
-    {
-        return $this->encode();
-    }
-
 }

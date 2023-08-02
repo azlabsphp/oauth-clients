@@ -19,14 +19,13 @@ use PHPUnit\Framework\TestCase;
 
 class JsonDecoderTest extends TestCase
 {
-
     public function test_json_encode_invoke_create_a_json_string()
     {
         $jsonnable = ['name' => 'John Doe', 'iat' => time()];
         $json = (new JsonEncode())($jsonnable);
-
-        $this->assertTrue(is_string($json));
-        $this->assertNotEquals($json, json_encode($jsonnable));
+        $is_string = is_string($json);
+        $this->assertTrue($is_string);
+        $this->assertNotSame($json, json_encode($jsonnable));
     }
 
     public function test_json_decode_return_associative_array()
@@ -37,9 +36,8 @@ class JsonDecoderTest extends TestCase
 
         $decoded = (new JsonDecode(true))($json);
 
-        $this->assertEquals($timestamp, $decoded['iat']);
-        $this->assertEquals('John Doe', $decoded['name']);
+        $this->assertSame($timestamp, $decoded['iat']);
+        $this->assertSame('John Doe', $decoded['name']);
 
     }
-    
 }

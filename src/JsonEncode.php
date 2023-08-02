@@ -26,10 +26,7 @@ class JsonEncode
     private $depth;
 
     /**
-     * creates class instance
-     * 
-     * @param int $flags 
-     * @param int $depth 
+     * creates class instance.
      */
     public function __construct(int $flags = 0, int $depth = 512)
     {
@@ -38,27 +35,31 @@ class JsonEncode
     }
 
     /**
-     * return a json encoded string
-     * 
-     * @param string|array|object $value 
-     * @return string 
-     * @throws InvalidArgumentException 
-     */
-    public function call($value)
-    {
-        return json_encode(static::recursiveksort($value), $this->flags, $this->depth);
-    }
-
-    /**
-     * functional interface for json encoding data
-     * 
-     * @param mixed $data 
-     * @return string 
-     * @throws InvalidArgumentException 
+     * functional interface for json encoding data.
+     *
+     * @param mixed $data
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return string
      */
     public function __invoke($data)
     {
         return $this->call($data);
+    }
+
+    /**
+     * return a json encoded string.
+     *
+     * @param string|array|object $value
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return string
+     */
+    public function call($value)
+    {
+        return json_encode(static::recursiveksort($value), $this->flags, $this->depth);
     }
 
     /**

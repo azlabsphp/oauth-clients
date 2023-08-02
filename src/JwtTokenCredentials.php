@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients;
 
-use BadMethodCallException;
-use DateTimeImmutable;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Exceptions\InvalidTokenException;
 use Drewlabs\Oauth\Clients\Exceptions\InvalidTokenSignatureException;
@@ -25,7 +23,7 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
     /**
      * @var string
      */
-    const ALGO = 'sha256';
+    public const ALGO = 'sha256';
 
     /**
      * @var int
@@ -48,41 +46,47 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
     private $secret;
 
     /**
-     * creates class instance
-     * 
-     * @param string $key 
-     * @param string $algo 
-     * @return void 
+     * creates class instance.
+     *
+     * @return void
      */
     public function __construct(string $key)
     {
-        $this->key = $key;  
+        $this->key = $key;
     }
 
+    public function __toString(): string
+    {
+        if (empty($this->getId()) || empty($this->getSecret())) {
+            throw new \BadMethodCallException('withPayload() must be called before creating the jwt token');
+        }
+        $payload = sprintf('%s.%s', (string) (new JwtHeader('HS256', 'JWT')), (string) (new JwtPayload(['sub' => $this->getId(), 'jit' => $this->getSecret(), 'expires_at' => (new \DateTimeImmutable())->modify(sprintf('+ %d seconds', $this->getTTL()))->format('YmdHis')])));
+
+        return sprintf('%s.%s', $payload, static::createSignature($payload, static::ALGO, $this->key));
+    }
 
     /**
-     * creates a new jwt credentials instance from jwt token string
-     * @param string $key 
-     * @param string $token 
-     * @return static 
+     * creates a new jwt credentials instance from jwt token string.
+     *
+     * @return static
      */
     public static function new(string $key, string $token)
     {
         $components = explode('.', $token);
 
-        if (count($components) !== 3) {
+        if (3 !== \count($components)) {
             // TODO: Throw InvalidTokenException
             throw new InvalidTokenException($token);
         }
 
-        list($header, $payload, $signature) = $components;
+        [$header, $payload, $signature] = $components;
 
-        //#region jwt header and payload
+        // #region jwt header and payload
         $jwtHeader = JwtHeader::decode($header);
         $jwtPayload = JwtPayload::decode($payload);
-        //#endregion jwt header and payload
+        // #endregion jwt header and payload
 
-        if (!$jwtPayload->isset('sub') || !$jwtPayload->isset('expires_at') || !is_string($expiresAt = $jwtPayload->getAttribute('expires_at'))) {
+        if (!$jwtPayload->isset('sub') || !$jwtPayload->isset('expires_at') || !\is_string($expiresAt = $jwtPayload->getAttribute('expires_at'))) {
             // TODO: throw an invalid token
             throw new InvalidTokenException($token);
         }
@@ -94,7 +98,7 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
         }
 
         // TODO: Check if the token signature is valid
-        $payload =  sprintf("%s.%s", (string)$jwtHeader, (string)$jwtPayload);
+        $payload = sprintf('%s.%s', (string) $jwtHeader, (string) $jwtPayload);
 
         // TODO: Make sure the signature is created with right algo
         if (!hash_equals(static::createSignature($payload, static::ALGO, $key), $signature)) {
@@ -103,7 +107,7 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
         }
 
         // Check if the token has expired
-        $isPast = \DateTimeImmutable::createFromFormat('YmdHis', $expiresAt) < new DateTimeImmutable;
+        $isPast = \DateTimeImmutable::createFromFormat('YmdHis', $expiresAt) < new \DateTimeImmutable();
 
         if ($isPast) {
             // TODO : throw TokenExpiresException
@@ -114,14 +118,11 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
     }
 
     /**
-     * Add payload to the jwt credentials instance
-     * 
+     * Add payload to the jwt credentials instance.
+     *
      * **Note** Method is immutable
-     * 
-     * @param string $id 
-     * @param string $secret 
-     * 
-     * @return static 
+     *
+     * @return static
      */
     public function withPayload(string $id, string $secret)
     {
@@ -140,12 +141,10 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
 
     /**
      * creates the token string with a ttl value.
-     * 
-     * 
+     *
      * **Note** Method is an immutable implementation
-     * 
-     * @param int $seconds 
-     * @return static 
+     *
+     * @return static
      */
     public function withTTL(int $seconds)
     {
@@ -155,28 +154,6 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
 
         return $self;
 
-    }
-
-    /**
-     * `id` property setter
-     * 
-     * @param string $id 
-     * @return void 
-     */
-    private function setId(string $id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * `secret property setter`
-     * 
-     * @param string $secret 
-     * @return void 
-     */
-    private function setSecret(string $secret)
-    {
-        $this->secret = $secret;
     }
 
     public function getId()
@@ -189,19 +166,30 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
         return $this->secret ?? '';
     }
 
-    public function __toString(): string
+    /**
+     * `id` property setter.
+     *
+     * @return void
+     */
+    private function setId(string $id)
     {
-        if (empty($this->getId()) || empty($this->getSecret())) {
-            throw new BadMethodCallException('withPayload() must be called before creating the jwt token');
-        }
-        $payload =  sprintf("%s.%s", (string)(new JwtHeader('HS256', 'JWT')), (string)(new JwtPayload(['sub' => $this->getId(), 'jit' => $this->getSecret(), 'expires_at' => (new \DateTimeImmutable)->modify(sprintf("+ %d seconds", $this->getTTL()))->format('YmdHis')])));
-        return sprintf("%s.%s", $payload, static::createSignature($payload, static::ALGO, $this->key));
+        $this->id = $id;
     }
 
     /**
-     * return the token ttl
-     * 
-     * @return int 
+     * `secret property setter`.
+     *
+     * @return void
+     */
+    private function setSecret(string $secret)
+    {
+        $this->secret = $secret;
+    }
+
+    /**
+     * return the token ttl.
+     *
+     * @return int
      */
     private function getTTL()
     {
@@ -209,15 +197,12 @@ class JwtTokenCredentials implements CredentialsIdentityInterface
     }
 
     /**
-     * create jwt signature
-     * 
-     * @param string $payload 
-     * @param string $algo 
-     * @param string $key 
-     * @return string 
+     * create jwt signature.
+     *
+     * @return string
      */
     private static function createSignature(string $payload, string $algo, string $key)
     {
-        return (new Base64URLEncode)(hash_hmac($algo, $payload, $key));
+        return (new Base64URLEncode())(hash_hmac($algo, $payload, $key));
     }
 }

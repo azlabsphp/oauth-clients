@@ -32,9 +32,7 @@ class JwtCookieCredentialsFactory implements CredentialsFactoryInterface
     private $key;
 
     /**
-     * creates class instance
-     * 
-     * @param string $name 
+     * creates class instance.
      */
     public function __construct(string $key, string $name = 'jwt-cookie')
     {

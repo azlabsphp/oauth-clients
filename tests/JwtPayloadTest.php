@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the drewlabs namespace.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Drewlabs\Oauth\Clients\JwtPayload;
 use PHPUnit\Framework\TestCase;
 
@@ -10,7 +21,7 @@ class JwtPayloadTest extends TestCase
         $attributes = ['name' => 'John Doe', 'iat' => time()];
         $jwtPayload = new JwtPayload($attributes);
 
-        $this->assertEquals($attributes, $jwtPayload->getValue());
+        $this->assertSame($attributes, $jwtPayload->getValue());
     }
 
     public function test_jwt_payload_get_attribute_return_matching_attribute_value()
@@ -19,8 +30,8 @@ class JwtPayloadTest extends TestCase
         $attributes = ['name' => 'John Doe', 'iat' => $timestamp];
         $jwtPayload = new JwtPayload($attributes);
 
-        $this->assertEquals('John Doe', $jwtPayload->getAttribute('name'));
-        $this->assertEquals($timestamp, $jwtPayload->getAttribute('iat'));
+        $this->assertSame('John Doe', $jwtPayload->getAttribute('name'));
+        $this->assertSame($timestamp, $jwtPayload->getAttribute('iat'));
 
     }
 
@@ -30,7 +41,7 @@ class JwtPayloadTest extends TestCase
         $attributes = ['name' => 'John Doe', 'iat' => $timestamp];
         $jwtPayload = new JwtPayload($attributes);
 
-        $this->assertEquals(null, $jwtPayload->getAttribute('sub'));
+        $this->assertNull($jwtPayload->getAttribute('sub'));
 
     }
 
@@ -39,8 +50,8 @@ class JwtPayloadTest extends TestCase
         $timestamp = time();
         $attributes = ['name' => 'John Doe', 'iat' => $timestamp];
         $jwtPayload = new JwtPayload($attributes);
-
-        $this->assertTrue(is_string($jwtPayload->encode()));
+        $is_string = is_string($jwtPayload->encode());
+        $this->assertTrue($is_string);
 
     }
 
@@ -50,11 +61,11 @@ class JwtPayloadTest extends TestCase
         $attributes = ['name' => 'John Doe', 'iat' => $timestamp];
         $jwtPayload = new JwtPayload($attributes);
 
-        $encoded  = $jwtPayload->encode();
+        $encoded = $jwtPayload->encode();
 
         $jwtPayload2 = JwtPayload::decode($encoded);
-        $this->assertEquals('John Doe', $jwtPayload2->getAttribute('name'));
-        $this->assertEquals($timestamp, $jwtPayload2->getAttribute('iat'));
+        $this->assertSame('John Doe', $jwtPayload2->getAttribute('name'));
+        $this->assertSame($timestamp, $jwtPayload2->getAttribute('iat'));
 
     }
 }

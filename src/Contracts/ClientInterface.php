@@ -23,9 +23,9 @@ interface ClientInterface
     public function getKey();
 
     /**
-     * Returns the client name property or attribute
-     * 
-     * @return string 
+     * Returns the client name property or attribute.
+     *
+     * @return string
      */
     public function getName(): ?string;
 

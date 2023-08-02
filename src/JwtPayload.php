@@ -21,10 +21,9 @@ class JwtPayload
     private $attributes;
 
     /**
-     * creates class instance
-     * 
-     * @param array $attributes 
-     * @return void 
+     * creates class instance.
+     *
+     * @return void
      */
     public function __construct(array $attributes)
     {
@@ -32,9 +31,19 @@ class JwtPayload
     }
 
     /**
-     * get the actual jwt payloaf
-     * 
-     * @return array<string, mixed> 
+     * returns the encoded string of the current class.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->encode();
+    }
+
+    /**
+     * get the actual jwt payloaf.
+     *
+     * @return array<string, mixed>
      */
     public function getValue()
     {
@@ -42,10 +51,9 @@ class JwtPayload
     }
 
     /**
-     * get payload value using payload name
-     * 
-     * @param string $name 
-     * @return mixed 
+     * get payload value using payload name.
+     *
+     * @return mixed
      */
     public function getAttribute(string $name)
     {
@@ -53,44 +61,32 @@ class JwtPayload
     }
 
     /**
-     * checks if the name attribute isset in the jwt payload
-     * 
-     * @param string $name 
-     * @return bool 
+     * checks if the name attribute isset in the jwt payload.
+     *
+     * @return bool
      */
     public function isset(string $name)
     {
-        return array_key_exists($name, $this->attributes) && null !== $this->attributes[$name];
+        return \array_key_exists($name, $this->attributes) && null !== $this->attributes[$name];
     }
 
     /**
-     * creates class instance form encoded string
-     * @param string $encoded 
-     * @return static 
+     * creates class instance form encoded string.
+     *
+     * @return static
      */
     public static function decode(string $encoded)
     {
-        $json = (new Base64URLDecode)($encoded);
+        $json = (new Base64URLDecode())($encoded);
+
         return new static((new JsonDecode(true))($json));
     }
 
     /**
-     * create encoded string from the current instance
-     * 
-     * @return string 
+     * create encoded string from the current instance.
      */
     public function encode(): string
     {
-        return (new Base64URLEncode)((new JsonEncode)($this->attributes));
-    }
-
-    /**
-     * returns the encoded string of the current class
-     * 
-     * @return string 
-     */
-    public function __toString()
-    {
-        return $this->encode();
+        return (new Base64URLEncode())((new JsonEncode())($this->attributes));
     }
 }

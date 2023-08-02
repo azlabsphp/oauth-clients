@@ -32,9 +32,7 @@ class JwtAuthorizationHeaderCredentialsFactory implements CredentialsFactoryInte
     private $key;
 
     /**
-     * creates class instance
-     * 
-     * @param string $method 
+     * creates class instance.
      */
     public function __construct(string $key, string $method = 'jwt')
     {
