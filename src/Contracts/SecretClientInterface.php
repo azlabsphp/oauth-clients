@@ -20,7 +20,7 @@ interface SecretClientInterface
      *
      * @return string
      */
-    public function getSecretAttribute();
+    public function getHashedSecret();
 
     /**
      * Set the property of the model to control whether the token is fully loaded or not.
@@ -30,11 +30,4 @@ interface SecretClientInterface
      * @return static
      */
     public function showPlainSecret($value = true);
-
-    /**
-     * Verify if client secret matches.
-     *
-     * @return bool
-     */
-    public function validateSecret(string $secret);
 }
