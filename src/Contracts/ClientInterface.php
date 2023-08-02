@@ -37,15 +37,6 @@ interface ClientInterface
     public function getUserId();
 
     /**
-     * Set the ip_addresses attribute of the client.
-     *
-     * @param string|array $value
-     *
-     * @return static
-     */
-    public function setIpAddressesAttribute($value);
-
-    /**
      * Return the ip_addresses attributes of the client.
      *
      * @return array

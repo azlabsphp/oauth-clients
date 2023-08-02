@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Contracts;
 
-interface SecretClientInterface
+interface SecretClientInterface extends ClientInterface
 {
     /**
      * Return the token property of the client model.
@@ -21,13 +21,4 @@ interface SecretClientInterface
      * @return string
      */
     public function getHashedSecret();
-
-    /**
-     * Set the property of the model to control whether the token is fully loaded or not.
-     *
-     * @param bool $value
-     *
-     * @return static
-     */
-    public function showPlainSecret($value = true);
 }
