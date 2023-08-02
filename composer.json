@@ -1,12 +1,11 @@
 {
-    "name": "drewlabs/authorized-clients",
-    "description": "Provides abstractions for working with server authorized clients",
+    "name": "drewlabs/oauth-clients",
+    "description": "Provides abstractions for working with oauth clients",
     "type": "library",
     "license": "MIT",
     "keywords": [
-        "http",
-        "authorized server clients",
-        "clients scopes"
+        "oauth",
+        "clients"
     ],
     "autoload": {
         "psr-4": {

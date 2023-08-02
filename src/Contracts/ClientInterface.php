@@ -23,11 +23,18 @@ interface ClientInterface
     public function getKey();
 
     /**
+     * Returns the client name property or attribute
+     * 
+     * @return string 
+     */
+    public function getName(): ?string;
+
+    /**
      * Returns the user to which the client belongs to.
      *
      * @return string|int|null
      */
-    public function getUserID();
+    public function getUserId();
 
     /**
      * Set the ip_addresses attribute of the client.

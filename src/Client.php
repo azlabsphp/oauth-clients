@@ -33,7 +33,12 @@ class Client implements ClientInterface
         $this->attributes = $attributes ?? [];
     }
 
-    public function getUserID()
+    public function getName(): ?string
+    {
+        return $this->getAttribute('name');
+    }
+
+    public function getUserId()
     {
         return $this->getAttribute('user_id');
     }
