@@ -230,12 +230,12 @@ class NewClient implements NewClientInterface, \JsonSerializable
         return $this;
     }
     
-    public function isPasswordClient(): bool
+    public function isPasswordClient(): ?bool
     {
         return $this->isPasswordClient;
     }
     
-    public function isPersonalClient(): bool
+    public function isPersonalClient(): ?bool
     {
         return $this->isPersonalClient;
     }

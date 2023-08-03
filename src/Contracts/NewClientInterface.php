@@ -81,14 +81,14 @@ interface NewClientInterface
     /**
      * Returns a boolean value for whether the client is a password client or not
      * 
-     * @return bool 
+     * @return bool|null
      */
-    public function isPasswordClient(): bool;
+    public function isPasswordClient(): ?bool;
 
     /**
      * Returns a boolean value for whether the client is a password client or not
      * 
-     * @return bool 
+     * @return bool|null
      */
-    public function isPersonalClient(): bool;
+    public function isPersonalClient(): ?bool;
 }
