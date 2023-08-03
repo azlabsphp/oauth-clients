@@ -14,16 +14,8 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients\Contracts;
 
 /**
- * This interface defines a functional interface for getting.
+ * @deprecated v0.2.x
  */
-interface ClientQueryInterface
+interface ClientQueryInterface extends ClientProviderInterface
 {
-    /**
-     * query for clients using the provided identity parameter.
-     *
-     * @param CredentialsIdentityInterface|SecretIdentityInterface $identity
-     *
-     * @return ClientInterface|null
-     */
-    public function __invoke(CredentialsIdentityInterface $identity);
 }

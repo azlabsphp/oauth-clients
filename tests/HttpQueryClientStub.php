@@ -14,7 +14,8 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients\Tests;
 
 use Drewlabs\Oauth\Clients\Client;
-use Drewlabs\Oauth\Clients\Contracts\ClientQueryInterface;
+use Drewlabs\Oauth\Clients\Contracts\ClientInterface as ContractsClientInterface;
+use Drewlabs\Oauth\Clients\Contracts\ClientProviderInterface;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
@@ -22,7 +23,7 @@ use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
-final class HttpQueryClientStub implements ClientQueryInterface
+final class HttpQueryClientStub implements ClientProviderInterface
 {
     /**
      * @var ClientInterface
@@ -61,10 +62,10 @@ final class HttpQueryClientStub implements ClientQueryInterface
         $this->streamFactory = $streamFactory;
     }
 
-    public function __invoke(CredentialsIdentityInterface $identity)
+    public function findByCredentials(CredentialsIdentityInterface $credentials): ?ContractsClientInterface
     {
         try {
-            $request = $this->writeRequestBody($this->requestFactory->createRequest('POST', $this->url), $identity);
+            $request = $this->writeRequestBody($this->requestFactory->createRequest('POST', $this->url), $credentials);
             $response = $this->client->sendRequest($this->setHeaders($request));
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode <= 204) {
@@ -75,6 +76,11 @@ final class HttpQueryClientStub implements ClientQueryInterface
         } catch (ClientExceptionInterface $e) {
             return null;
         }
+    }
+
+    public function __invoke(CredentialsIdentityInterface $credentials)
+    {
+        return $this->findByCredentials($credentials);
     }
 
     /**
@@ -149,7 +155,7 @@ final class HttpQueryClientStub implements ClientQueryInterface
     {
         $json = json_encode($value, $options, $depth);
         if (\JSON_ERROR_NONE !== json_last_error()) {
-            throw new \InvalidArgumentException('json_encode error: '.json_last_error_msg());
+            throw new \InvalidArgumentException('json_encode error: ' . json_last_error_msg());
         }
         /* @var string */
         return $json;

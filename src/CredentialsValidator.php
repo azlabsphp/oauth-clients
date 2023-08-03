@@ -15,7 +15,7 @@ namespace Drewlabs\Oauth\Clients;
 
 use Closure;
 use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
-use Drewlabs\Oauth\Clients\Contracts\ClientQueryInterface;
+use Drewlabs\Oauth\Clients\Contracts\ClientProviderInterface;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityValidator;
 use Drewlabs\Oauth\Clients\Contracts\ScopeInterface;
@@ -25,28 +25,28 @@ use Drewlabs\Oauth\Clients\Exceptions\MissingScopesException;
 final class CredentialsValidator implements CredentialsIdentityValidator
 {
     /**
-     * @var \Closure|ClientQueryInterface
+     * @var \Closure|ClientProviderInterface
      */
-    private $selector;
+    private $provider;
 
     /**
-     * @param \Closure|ClientQueryInterface $selectorFunc This function will be used to select client from datasource
+     * @param (\Closure(CredentialsIdentityInterface $credentials): ClientInterface|null)|ClientProviderInterface $provider This function will be used to select client from datasource
      *                                                    using the clientId and clientSecret as parameters. This means that the selector function
      *                                                    must accept the clientId and clientSecret as arguments
      */
-    public function __construct($selectorFunc)
+    public function __construct($provider)
     {
-        $this->selector = $selectorFunc;
+        $this->provider = $provider;
     }
 
-    public function validate(CredentialsIdentityInterface $identity, $scopes = [], $ip = null)
+    public function validate(CredentialsIdentityInterface $credentials, $scopes = [], $ip = null)
     {
 
         // Find the client based on the provided token and id
         /**
          * @var ClientInterface
          */
-        $client = ($this->selector)($identity);
+        $client = ($this->provider)($credentials);
 
         // Case the client is null we throw an authorization exception
         if (null === $client) {
