@@ -19,8 +19,10 @@ interface ClientsRepository
      * Find a client instance using user id.
      *
      * @param mixed $identifier
+     * 
+     * @return array<ClientInterface>
      */
-    public function findByUserId($identifier): ?ClientInterface;
+    public function findByUserId($identifier): array;
 
     /**
      * Find a client instance using `id` property.
