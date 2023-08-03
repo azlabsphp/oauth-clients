@@ -12,3 +12,7 @@
 ## [0.2.3] [2023-08-02]
 
 - Updated NewClientInterface adding isPersonalClient, isPasswordClient and getId which might return null value
+
+## [0.2.11] [2023-08-02]
+
+- Changed return value of ClientsRepository::findByUserId to be an array as user can has multiple client applications
