@@ -20,14 +20,14 @@ interface ClientsRepository
      *
      * @param mixed $identifier
      */
-    public function findByUserId($identifier): ClientInterface;
+    public function findByUserId($identifier): ?ClientInterface;
 
     /**
      * Find a client instance using `id` property.
      *
      * @param string|int $id
      */
-    public function findById($id): ClientInterface;
+    public function findById($id): ?ClientInterface;
 
     /**
      * Update client instance using `id` property.

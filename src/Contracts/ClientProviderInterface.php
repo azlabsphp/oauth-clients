@@ -22,7 +22,7 @@ interface ClientProviderInterface
      *
      * @return ClientInterface|null
      */
-    public function __invoke(CredentialsIdentityInterface $credentials);
+    public function __invoke(CredentialsIdentityInterface $credentials): ?ClientInterface;
 
     /**
      * Find oauth client via credentials object
