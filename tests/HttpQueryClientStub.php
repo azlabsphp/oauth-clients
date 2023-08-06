@@ -14,19 +14,19 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients\Tests;
 
 use Drewlabs\Oauth\Clients\Client;
-use Drewlabs\Oauth\Clients\Contracts\ClientInterface as ContractsClientInterface;
+use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
 use Drewlabs\Oauth\Clients\Contracts\ClientProviderInterface;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Psr\Http\Client\ClientExceptionInterface;
-use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Client\ClientInterface as PsrClientInterface;
 
 final class HttpQueryClientStub implements ClientProviderInterface
 {
     /**
-     * @var ClientInterface
+     * @var PsrClientInterface
      */
     private $client;
 
@@ -55,14 +55,14 @@ final class HttpQueryClientStub implements ClientProviderInterface
      *
      * @return void
      */
-    public function __construct(ClientInterface $client, RequestFactoryInterface $requestFactory, StreamFactoryInterface $streamFactory)
+    public function __construct(PsrClientInterface $client, RequestFactoryInterface $requestFactory, StreamFactoryInterface $streamFactory)
     {
         $this->client = $client;
         $this->requestFactory = $requestFactory;
         $this->streamFactory = $streamFactory;
     }
 
-    public function findByCredentials(CredentialsIdentityInterface $credentials): ?ContractsClientInterface
+    public function findByCredentials(CredentialsIdentityInterface $credentials): ?ClientInterface
     {
         try {
             $request = $this->writeRequestBody($this->requestFactory->createRequest('POST', $this->url), $credentials);
@@ -78,7 +78,7 @@ final class HttpQueryClientStub implements ClientProviderInterface
         }
     }
 
-    public function __invoke(CredentialsIdentityInterface $credentials)
+    public function __invoke(CredentialsIdentityInterface $credentials): ?ClientInterface
     {
         return $this->findByCredentials($credentials);
     }
