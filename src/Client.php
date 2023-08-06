@@ -13,64 +13,89 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients;
 
+use Drewlabs\Oauth\Clients\Contracts\AttributesAware;
 use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
+use Drewlabs\Oauth\Clients\Contracts\GrantTypesAware;
+use Drewlabs\Oauth\Clients\Contracts\PlainTextSecretAware;
+use Drewlabs\Oauth\Clients\Contracts\RedirectUrlAware;
 use Drewlabs\Oauth\Clients\Contracts\ScopeInterface;
 
-class Client implements ClientInterface
+class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, RedirectUrlAware
 {
     /**
-     * List of class attributes.
-     *
-     * @var array
+     * @var AttributesAware
      */
-    private $attributes = [];
+    private $base;
 
     /**
-     * Creates class instance.
+     * @var string|null
      */
-    public function __construct(array $attributes = [])
+    private $plainTextSecret;
+
+    /**
+     * Create client instance.
+     */
+    public function __construct(AttributesAware $base, string $plainTextSecret = null)
     {
-        $this->attributes = $attributes ?? [];
+        $this->base = $base;
+        $this->plainTextSecret = $plainTextSecret;
+    }
+
+    public function getRedirectUrl(): ?string
+    {
+        return $this->base->getAttribute('redirect');
+    }
+
+    public function getGrantTypes(): array
+    {
+        $grantTypes = $this->base->getAttribute('grant_types');
+
+        return \is_string($grantTypes) ? explode(',', $grantTypes) : (array) $grantTypes;
+    }
+
+    public function getHashedSecret()
+    {
+        return $this->base->getAttribute('secret');
+    }
+
+    public function getPlainSecretAttribute()
+    {
+        return $this->plainTextSecret;
     }
 
     public function getName(): ?string
     {
-        return $this->getAttribute('name');
+        return $this->base->getAttribute('name');
     }
 
     public function getUserId()
     {
-        return $this->getAttribute('user_id');
+        return $this->base->getAttribute('user_id');
     }
 
     public function getKey()
     {
-        return $this->getAttribute('id');
-    }
-
-    public function setIpAddressesAttribute($value)
-    {
-        $this->attributes['ip_addresses'] = $value;
+        return $this->base->getAttribute('id');
     }
 
     public function getIpAddressesAttribute()
     {
-        return $this->getAttribute('ip_addresses');
+        return $this->base->getAttribute('ip_addresses');
     }
 
     public function firstParty()
     {
-        return (bool) $this->getAttribute('personal_access_client') || (bool) $this->getAttribute('password_client');
+        return (bool) $this->base->getAttribute('personal_access_client') || (bool) $this->base->getAttribute('password_client');
     }
 
     public function isRevoked()
     {
-        return (bool) $this->getAttribute('revoked');
+        return (bool) $this->base->getAttribute('revoked');
     }
 
     public function getScopes(): array
     {
-        if (\is_string($scopes = $this->getAttribute('scopes'))) {
+        if (\is_string($scopes = $this->base->getAttribute('scopes'))) {
             return json_decode($scopes, true);
         }
 
@@ -93,13 +118,18 @@ class Client implements ClientInterface
         return !empty(array_intersect(\is_string($scope) ? [$scope] : $scope, $clientScopes ?? []));
     }
 
-    /**
-     * Provides an interface for resolving attributes from `$attributes` array.
-     *
-     * @return mixed
-     */
-    private function getAttribute(string $name)
+    public function isPasswordClient(): bool
     {
-        return $this->attributes[$name] ?? null;
+        return (bool) $this->base->getAttribute('password_client');
+    }
+
+    public function isPersonalClient(): bool
+    {
+        return (bool) $this->base->getAttribute('personal_access_client');
+    }
+
+    public function isConfidential(): bool
+    {
+        return null !== $this->base->getAttribute('personal_access_client') && !empty($this->getHashedSecret());
     }
 }

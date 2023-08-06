@@ -70,4 +70,23 @@ interface ClientInterface
      * @param ScopeInterface|string|string[] $scope
      */
     public function hasScope($scope): bool;
+
+    /**
+     * Returns a boolean value for whether the client is a password client or not.
+     *
+     * @return bool|null
+     */
+    public function isPasswordClient(): bool;
+
+    /**
+     * Returns a boolean value for whether the client is a password client or not.
+     *
+     * @return bool|null
+     */
+    public function isPersonalClient(): bool;
+
+    /**
+     * Return true if the client has secret attribute.
+     */
+    public function isConfidential(): bool;
 }

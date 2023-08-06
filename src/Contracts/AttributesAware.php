@@ -13,12 +13,19 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Contracts;
 
-interface HashesClientSecret
+interface AttributesAware
 {
     /**
-     * hashes client secret using a hasing algorithm.
+     * Returns the value of `$name` attribute or property.
      *
-     * @return string
+     * @return mixed
      */
-    public function hashSecret(string $plainText);
+    public function getAttribute(string $name);
+
+    /**
+     * Returns array representation of the current instance.
+     *
+     * @return array
+     */
+    public function toArray();
 }

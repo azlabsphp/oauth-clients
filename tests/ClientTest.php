@@ -13,16 +13,19 @@ declare(strict_types=1);
 
 use Drewlabs\Oauth\Clients\Client;
 use Drewlabs\Oauth\Clients\Tests\ClientsStub;
+use Drewlabs\Oauth\Clients\Tests\Stubs\AttributeAwareMockFactory;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
+    use AttributeAwareMockFactory;
+
     public function test_client_constructor()
     {
         $attributes = array_values(array_filter(ClientsStub::getClients(), static function ($current) {
             return 'bdcf5a49-341e-4688-8bba-755237ecfaa1' === $current['id'];
         }))[0];
-        $client = new Client($attributes);
+        $client = new Client($this->createAttributeAware($attributes));
         $this->assertTrue($client->firstParty());
         $this->assertFalse($client->isRevoked());
     }

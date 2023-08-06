@@ -19,17 +19,13 @@ interface ClientProviderInterface
      * query for clients using the provided identity parameter.
      *
      * @param CredentialsIdentityInterface|SecretIdentityInterface $credentials
-     *
-     * @return ClientInterface|null
      */
     public function __invoke(CredentialsIdentityInterface $credentials): ?ClientInterface;
 
     /**
-     * Find oauth client via credentials object
-     * 
+     * Find oauth client via credentials object.
+     *
      * @param CredentialsIdentityInterface|SecretIdentityInterface $credentials
-     * 
-     * @return ClientInterface|null 
      */
     public function findByCredentials(CredentialsIdentityInterface $credentials): ?ClientInterface;
 }

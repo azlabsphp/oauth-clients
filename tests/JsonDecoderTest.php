@@ -23,7 +23,7 @@ class JsonDecoderTest extends TestCase
     {
         $jsonnable = ['name' => 'John Doe', 'iat' => time()];
         $json = (new JsonEncode())($jsonnable);
-        $is_string = is_string($json);
+        $is_string = \is_string($json);
         $this->assertTrue($is_string);
         $this->assertNotSame($json, json_encode($jsonnable));
     }

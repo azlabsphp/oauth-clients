@@ -31,8 +31,8 @@ final class CredentialsValidator implements CredentialsIdentityValidator
 
     /**
      * @param (\Closure(CredentialsIdentityInterface $credentials): ClientInterface|null)|ClientProviderInterface $provider This function will be used to select client from datasource
-     *                                                    using the clientId and clientSecret as parameters. This means that the selector function
-     *                                                    must accept the clientId and clientSecret as arguments
+     *                                                                                                                      using the clientId and clientSecret as parameters. This means that the selector function
+     *                                                                                                                      must accept the clientId and clientSecret as arguments
      */
     public function __construct($provider)
     {

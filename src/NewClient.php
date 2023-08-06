@@ -41,15 +41,16 @@ class NewClient implements NewClientInterface, \JsonSerializable
 
     /**
      * Creates class instance.
-     * 
-     * @param string|int $id 
-     * @param bool $isPersonalClient 
-     * @param bool $isPasswordClient 
-     * @return void 
+     *
+     * @param string|int $id
+     * @param bool       $isPersonalClient
+     * @param bool       $isPasswordClient
+     *
+     * @return void
      */
     public function __construct($id = null, bool $isPersonalClient = null, bool $isPasswordClient = null)
     {
-        $this->id = null !== $id ? (string)$id : $id;
+        $this->id = null !== $id ? (string) $id : $id;
         $this->isPersonalClient = $isPersonalClient;
         $this->isPasswordClient = $isPasswordClient;
         $this->attributes = [];
@@ -229,12 +230,12 @@ class NewClient implements NewClientInterface, \JsonSerializable
 
         return $this;
     }
-    
+
     public function isPasswordClient(): ?bool
     {
         return $this->isPasswordClient;
     }
-    
+
     public function isPersonalClient(): ?bool
     {
         return $this->isPersonalClient;

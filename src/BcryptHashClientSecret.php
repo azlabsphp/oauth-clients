@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the drewlabs namespace.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\HashesClientSecret;
@@ -12,9 +23,7 @@ class BcryptHashClientSecret implements HashesClientSecret
     private $options;
 
     /**
-     * Create class instance
-     * 
-     * @param array $options 
+     * Create class instance.
      */
     public function __construct(array $options = [])
     {
@@ -23,6 +32,6 @@ class BcryptHashClientSecret implements HashesClientSecret
 
     public function hashSecret(string $plainText)
     {
-        return password_hash($plainText, PASSWORD_BCRYPT, $this->options ?? []);
+        return password_hash($plainText, \PASSWORD_BCRYPT, $this->options ?? []);
     }
 }

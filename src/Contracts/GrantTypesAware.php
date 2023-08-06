@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Contracts;
 
-interface HashesClientSecret
+interface GrantTypesAware
 {
     /**
-     * hashes client secret using a hasing algorithm.
+     * Returns list of grant types supported by the client.
      *
-     * @return string
+     * @return string[]
      */
-    public function hashSecret(string $plainText);
+    public function getGrantTypes(): array;
 }

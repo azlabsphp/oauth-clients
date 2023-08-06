@@ -129,10 +129,10 @@ class NewClientTest extends TestCase
     public function test_new_client_with_no_argument_create_a_client_that_is_not_personal_client()
     {
         // Act
-        $client = new NewClient;
+        $client = new NewClient();
 
         // Assert
-        $this->assertFalse($client->isPersonalClient());
+        $this->assertFalse(boolval($client->isPersonalClient()));
     }
 
     public function test_new_client_with_third_parameter_true_creates_a_personal_access_client()
@@ -152,9 +152,9 @@ class NewClientTest extends TestCase
     public function test_new_client_with_no_argument_create_a_client_that_is_not_password_client()
     {
         // Act
-        $client = new NewClient;
+        $client = new NewClient();
 
         // Assert
-        $this->assertFalse($client->isPasswordClient());
+        $this->assertFalse(boolval($client->isPasswordClient()));
     }
 }

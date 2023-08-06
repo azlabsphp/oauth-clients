@@ -13,12 +13,10 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Contracts;
 
-interface HashesClientSecret
+interface RedirectUrlAware
 {
     /**
-     * hashes client secret using a hasing algorithm.
-     *
-     * @return string
+     * Returns the url where users are redirected after authentication.
      */
-    public function hashSecret(string $plainText);
+    public function getRedirectUrl(): ?string;
 }

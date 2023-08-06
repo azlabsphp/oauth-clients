@@ -19,7 +19,7 @@ interface ClientsRepository
      * Find a client instance using user id.
      *
      * @param mixed $identifier
-     * 
+     *
      * @return array<ClientInterface>
      */
     public function findByUserId($identifier): array;
@@ -43,7 +43,7 @@ interface ClientsRepository
     /**
      * Creates a new client instance.
      *
-     * @return ClientInterface&PlainTextSecretAware|mixed
+     * @return ClientInterface&PlainTextSecretAware&mixed
      */
     public function create(NewClientInterface $attributes, \Closure $callback = null);
 
