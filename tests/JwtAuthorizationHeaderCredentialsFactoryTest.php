@@ -12,7 +12,6 @@ declare(strict_types=1);
  */
 
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Drewlabs\Oauth\Clients\JwtAuthorizationHeaderCredentialsFactory;
 use Drewlabs\Oauth\Clients\JwtTokenCredentials;
 use Drewlabs\Oauth\Clients\Tests\Stubs\PsrServerRequestFacade;
