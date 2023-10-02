@@ -13,17 +13,13 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Contracts;
 
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
-use Psr\Http\Message\ServerRequestInterface;
-
 interface CredentialsFactoryInterface
 {
     /**
      * Returns a (client, secret) tuple from provided request.
      *
-     * @throws AuthorizationException
      *
-     * @return CredentialsIdentityInterface|SecretIdentityInterface
+     * @return CredentialsIdentityInterface|SecretIdentityInterface|null
      */
-    public function create(ServerRequestInterface $request);
+    public function create($request);
 }

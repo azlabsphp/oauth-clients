@@ -44,7 +44,7 @@ class Client implements ClientEntityInterface
         $this->id = $id;
         $this->name = $name;
         $this->redirect = $redirect;
-        $this->confidential;
+        $this->confidential = $confidential;
     }
 
     /**

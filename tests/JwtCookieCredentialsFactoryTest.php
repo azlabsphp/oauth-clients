@@ -15,6 +15,7 @@ use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Drewlabs\Oauth\Clients\JwtCookieCredentialsFactory;
 use Drewlabs\Oauth\Clients\JwtTokenCredentials;
+use Drewlabs\Oauth\Clients\Tests\Stubs\PsrServerRequestFacade;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use PHPUnit\Framework\TestCase;
@@ -29,22 +30,24 @@ class JwtCookieCredentialsFactoryTest extends TestCase
         $serverRequest = $serverRequest->withCookieParams(['jwt-cookie' => $jwtToken]);
 
         // Act
-        $credentials = (new JwtCookieCredentialsFactory('SuperSecretPassword'))->create($serverRequest);
+        $credentials = (new JwtCookieCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword'))->create($serverRequest);
 
         // Assert
         $this->assertInstanceOf(CredentialsIdentityInterface::class, $credentials);
         $this->assertSame('NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0', $credentials->getSecret());
     }
 
-    public function test_jwt_cookie_credentials_factory_throws_authorization_exception()
+    public function test_jwt_cookie_credentials_factory_returns_null_case_jwt_cookie_is_not_provided()
     {
         $credentials = new JwtTokenCredentials('SuperSecretPassword');
         (string) $credentials->withTTL(3)->withPayload('apikey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0');
         $serverRequest = $this->createServerRequest();
 
-        $this->expectException(AuthorizationException::class);
         // Act
-        $credentials = (new JwtCookieCredentialsFactory('SuperSecretPassword'))->create($serverRequest);
+        $credentials = (new JwtCookieCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword'))->create($serverRequest);
+
+        // Assert
+        $this->assertNull($credentials);
 
     }
 

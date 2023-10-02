@@ -14,13 +14,10 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
-use Psr\Http\Message\ServerRequestInterface;
+use Drewlabs\Oauth\Clients\Contracts\ServerRequestFacade;
 
 class JwtCookieCredentialsFactory implements CredentialsFactoryInterface
 {
-    use InteractWithServerRequest;
-
     /**
      * @var string
      */
@@ -32,26 +29,32 @@ class JwtCookieCredentialsFactory implements CredentialsFactoryInterface
     private $key;
 
     /**
-     * creates class instance.
+     * @var ServerRequestFacade
      */
-    public function __construct(string $key, string $name = 'jwt-cookie')
+    private $serverRequest;
+
+    /**
+     * Create class instance
+     * 
+     * @param ServerRequestFacade $serverRequest 
+     */
+    public function __construct(ServerRequestFacade $serverRequest, string $key, string $name = 'jwt-cookie')
     {
+        $this->serverRequest = $serverRequest;
         $this->name = $name;
         $this->key = $key;
     }
 
-    public function create(ServerRequestInterface $request)
+    public function create($request)
     {
-        $cookies = $request->getCookieParams();
-
-        $jwtToken = $cookies[$this->name] ?? null;
+        $jwtToken = $this->serverRequest->getRequestCookie($request, $this->name);
 
         // return a basic auth credential instance
         if ($jwtToken) {
             return JwtTokenCredentials::new($this->key, $jwtToken);
         }
 
-        // throw not found exception if base64 is null or false
-        throw new AuthorizationException('jwt auth string not found');
+        // we return null if base64 is null or false
+        return null;
     }
 }

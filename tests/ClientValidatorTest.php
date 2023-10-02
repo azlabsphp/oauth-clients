@@ -50,7 +50,7 @@ class ClientValidatorTest extends TestCase
     {
         $this->expectException(AuthorizationException::class);
         $validator = new CredentialsValidator($this->createSelector());
-        $result = $validator->validate(new Credentials('e28df7be-e9f7-4bd4-a689-c8a8d51afe96', '35a56ee81ae61f7464d4bffae812eafea2534c63'), ['sys:all']);
+        $validator->validate(new Credentials('e28df7be-e9f7-4bd4-a689-c8a8d51afe96', '35a56ee81ae61f7464d4bffae812eafea2534c63'), ['sys:all']);
     }
 
     public function test_callable_selector()

@@ -14,7 +14,7 @@ declare(strict_types=1);
 use Drewlabs\Oauth\Clients\BasicAuthCredentials;
 use Drewlabs\Oauth\Clients\BasicAuthorizationCredentialsFactory;
 
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\Tests\Stubs\PsrServerRequestFacade;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +27,7 @@ class BasicAuthorizationCredentialsFactoryTest extends TestCase
         $request = $request->withAddedHeader('Authorization', 'Basic '.base64_encode(sprintf('%s:%s', 'apiKey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0')));
 
         // Act
-        $credentials = (new BasicAuthorizationCredentialsFactory())->create($request);
+        $credentials = (new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade))->create($request);
 
         // Assert
         $this->assertInstanceOf(BasicAuthCredentials::class, $credentials);
@@ -35,12 +35,12 @@ class BasicAuthorizationCredentialsFactoryTest extends TestCase
 
     }
 
-    public function test_basic_authorization_credentials_factory_create_throws_authorization_exception()
+    public function test_basic_authorization_credentials_factory_create_returns_null_case_basic_credentials_not_provided()
     {
-        $this->expectException(AuthorizationException::class);
         $request = $this->createServerRequest();
         // Act
-        $credentials = (new BasicAuthorizationCredentialsFactory())->create($request);
+        $credentials = (new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade))->create($request);
+        $this->assertNull($credentials);
     }
 
     private function createServerRequest()

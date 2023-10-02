@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
-use Psr\Http\Message\ServerRequestInterface;
+use Drewlabs\Oauth\Clients\Contracts\ServerRequestFacade;
 
 class JwtAuthorizationHeaderCredentialsFactory implements CredentialsFactoryInterface
 {
-    use InteractWithServerRequest;
+    /**
+     * @var ServerRequestFacade
+     */
+    private $serverRequest;
 
     /**
      * @var string
@@ -32,24 +34,27 @@ class JwtAuthorizationHeaderCredentialsFactory implements CredentialsFactoryInte
     private $key;
 
     /**
-     * creates class instance.
+     * Create class instance
+     * 
+     * @param ServerRequestFacade $serverRequest 
      */
-    public function __construct(string $key, string $method = 'jwt')
+    public function __construct(ServerRequestFacade $serverRequest, string $key, string $method = 'jwt')
     {
+        $this->serverRequest = $serverRequest;
         $this->method = $method;
         $this->key = $key;
     }
 
-    public function create(ServerRequestInterface $request)
+    public function create($request)
     {
-        $jwtToken = $this->getHeader($request, 'authorization', $this->method);
+        $jwtToken = $this->serverRequest->getAuthorizationHeader($request, $this->method);
 
         // return a basic auth credential instance
         if ($jwtToken) {
             return JwtTokenCredentials::new($this->key, $jwtToken);
         }
 
-        // throw not found exception if base64 is null or false
-        throw new AuthorizationException('jwt auth string not found');
+        // We return null case the jwt token is not found
+        return null;
     }
 }

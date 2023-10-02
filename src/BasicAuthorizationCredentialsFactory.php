@@ -14,23 +14,35 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
-use Psr\Http\Message\ServerRequestInterface;
+use Drewlabs\Oauth\Clients\Contracts\ServerRequestFacade;
 
 class BasicAuthorizationCredentialsFactory implements CredentialsFactoryInterface
 {
-    use InteractWithServerRequest;
+    /**
+     * @var ServerRequestFacade
+     */
+    private $serverRequest;
 
-    public function create(ServerRequestInterface $request)
+    /**
+     * Create class instance
+     * 
+     * @param ServerRequestFacade $serverRequest 
+     * @return void 
+     */
+    public function __construct(ServerRequestFacade $serverRequest)
     {
-        $base64 = $this->getHeader($request, 'authorization', 'basic');
+        $this->serverRequest = $serverRequest;
+    }
+
+    public function create($request)
+    {
+        $base64 = $this->serverRequest->getAuthorizationHeader($request, 'basic');
 
         // return a basic auth credential instance
         if ($base64) {
             return BasicAuthCredentials::new($base64);
         }
 
-        // throw not found exception if base64 is null or false
-        throw new AuthorizationException('basic auth string not found');
+        return null;
     }
 }

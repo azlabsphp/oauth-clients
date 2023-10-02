@@ -15,14 +15,27 @@ namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
-use Psr\Http\Message\ServerRequestInterface;
+use Drewlabs\Oauth\Clients\Contracts\ServerRequestFacade;
 
 class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
 {
-    use InteractWithServerRequest;
+    /**
+     * @var ServerRequestFacade
+     */
+    private $serverRequest;
 
-    public function create(ServerRequestInterface $request)
+    /**
+     * Create class instance
+     * 
+     * @param ServerRequestFacade $serverRequest 
+     */
+    public function __construct(ServerRequestFacade $serverRequest)
+    {
+        $this->serverRequest = $serverRequest;
+    }
+
+
+    public function create($request)
     {
         // query identity from request cookie
         $credentials = $this->fromCookie($request);
@@ -32,11 +45,7 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
             $credentials = $this->fromHeaders($request);
         }
 
-        // throw an exception if the credentials is not found
-        if (null === $credentials) {
-            throw new AuthorizationException('authorization headers and cookies not found');
-        }
-
+        // Return the constructed credentials
         return $credentials;
     }
 
@@ -45,41 +54,40 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
      *
      * @return CredentialsIdentityInterface|null
      */
-    private function fromCookie(ServerRequestInterface $request)
+    private function fromCookie($request)
     {
         // get request cookies
-        $cookies = $request->getCookieParams();
+        $clientId = $this->serverRequest->getRequestCookie($request, 'clientid');
 
         // query for clientid cookie value
-        if (!isset($cookies['clientid'])) {
+        if (empty($clientId)) {
             return null;
         }
+        $clientsecret = $this->serverRequest->getRequestCookie($request, 'clientsecret');
 
         // query for clientsecret cookie value
-        if (!isset($cookies['clientsecret'])) {
+        if (empty($clientsecret)) {
             return null;
         }
 
-        return new Credentials($cookies['clientid'], $cookies['clientsecret']);
+        return new Credentials($clientId, $clientsecret);
     }
 
     /**
      * Read a (client, secret) from request headers or request parsed body.
      *
-     * @throws AuthorizationException
-     *
-     * @return array
+     * @return Credentials|null
      */
-    private function fromHeaders(ServerRequestInterface $request)
+    private function fromHeaders($request)
     {
         // query for client secret header value
         if (null === ($secret = $this->getAuthSecret($request))) {
-            throw new AuthorizationException('client secret header value not found');
+            return null;
         }
 
         // query fir client id header value
-        if (null === ($client = $this->getClientID($request))) {
-            throw new AuthorizationException('client id header value not found');
+        if (null === ($client = $this->getClientId($request))) {
+            return null;
         }
 
         return new Credentials($client, $secret);
@@ -89,35 +97,22 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
     {
         // We search for authorization secret using all possible header values
         // in order to support legacy applications
-        $secret = $this->getHeader($request, 'x-client-secret', '');
-        $secret = $secret ?? $this->getHeader($request, 'x-authorization-client-secret', '');
-        $secret = $secret ?? $this->getHeader($request, 'x-authorization-client-token', '');
-        $query = (array) ($request->getQueryParams() ?? []);
-        if (null === $secret && isset($query['client_secret'])) {
-            return $query['client_secret'];
+        $secret = $this->serverRequest->getRequestHeader($request, 'x-client-secret');
+        $secret = $secret ?? $this->serverRequest->getRequestHeader($request, 'x-authorization-client-secret');
+        $secret = $secret ?? $this->serverRequest->getRequestHeader($request, 'x-authorization-client-token');
+        if (null === $secret && !empty($value = $this->serverRequest->getRequestAttribute($request, 'client_secret'))) {
+            return $value;
         }
-        $body = (array) ($request->getParsedBody() ?? []);
-        if (null === $secret && isset($body['client_secret'])) {
-            return $body['client_secret'];
-        }
-
         return $secret;
     }
 
-    private function getClientID($request)
+    private function getClientId($request)
     {
-        $header = $request->getHeader('x-authorization-client-id');
-        $header = empty($header) ? $request->getHeader('x-client-id') : $header;
-        $clientId = array_pop($header);
-        $query = (array) ($request->getQueryParams() ?? []);
-        if (null === $clientId && isset($query['client_id'])) {
-            return $query['client_id'];
+        $clientId = $this->serverRequest->getRequestHeader($request, 'x-authorization-client-id');
+        $clientId = empty($clientId) ? $this->serverRequest->getRequestHeader($request, 'x-client-id') : $clientId;
+        if (null === $clientId && !empty($value = $this->serverRequest->getRequestAttribute($request, 'client_id'))) {
+            return $value;
         }
-        $body = (array) ($request->getParsedBody() ?? []);
-        if (null === $clientId && isset($body['client_id'])) {
-            return $body['client_id'];
-        }
-
         return $clientId;
     }
 }

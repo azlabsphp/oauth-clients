@@ -77,7 +77,6 @@ final class HttpQueryClientStub implements ClientProviderInterface
             if ($statusCode >= 200 && $statusCode <= 204) {
                 return new Client(new AttributeAwareStub(json_decode($response->getBody()->__toString(), true)));
             }
-
             return null;
         } catch (ClientExceptionInterface $e) {
             return null;
