@@ -7,7 +7,9 @@ use Drewlabs\Oauth\Clients\Contracts\AttributesAware;
 
 class AttributeAwareStub implements AttributesAware
 {
-
+    /**
+     * @var array<string,mixed>
+     */
     private $attributes;
 
     public function __construct(array $attributes = [])
