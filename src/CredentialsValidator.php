@@ -65,6 +65,13 @@ final class CredentialsValidator implements CredentialsIdentityValidator
             throw new MissingScopesException($client->getKey(), array_diff($client->getScopes(), $scopes));
         }
 
+        // Case the client is a first party client, we do not check for
+        // ip address as first party clients are intended to have administration privilege
+        // and should not be used by third party applications
+        if ($client->firstParty()) {
+            return $client;
+        }
+
         // ! Provide the client request headers in the proxy request headers definition
         // Get Client IP Addresses
         $ips = null !== ($ips = $client->getIpAddressesAttribute()) ? $ips : [];
