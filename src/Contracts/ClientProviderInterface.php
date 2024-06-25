@@ -25,7 +25,7 @@ interface ClientProviderInterface
     /**
      * Find oauth client via credentials object.
      *
-     * @param CredentialsIdentityInterface|SecretIdentityInterface $credentials
+     * @param CredentialsIdentityInterface|SecretIdentityInterface $identity
      */
-    public function findByCredentials(CredentialsIdentityInterface $credentials): ?ClientInterface;
+    public function findByCredentials(CredentialsIdentityInterface $identity): ?ClientInterface;
 }

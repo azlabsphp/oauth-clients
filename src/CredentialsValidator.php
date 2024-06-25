@@ -22,11 +22,12 @@ use Drewlabs\Oauth\Clients\Contracts\ScopeInterface;
 use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Drewlabs\Oauth\Clients\Exceptions\MissingScopesException;
 
+/**
+ * @deprecated Clients should be able self validatable
+ */
 final class CredentialsValidator implements CredentialsIdentityValidator
 {
-    /**
-     * @var \Closure|ClientProviderInterface
-     */
+    /**  @var \Closure|ClientProviderInterface */
     private $provider;
 
     /**

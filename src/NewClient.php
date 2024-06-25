@@ -13,9 +13,10 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients;
 
+use Drewlabs\Oauth\Clients\Contracts\ApiKeyAware;
 use Drewlabs\Oauth\Clients\Contracts\NewClientInterface;
 
-class NewClient implements NewClientInterface, \JsonSerializable
+class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
 {
     /**
      * List of class attributes.
@@ -54,6 +55,11 @@ class NewClient implements NewClientInterface, \JsonSerializable
         $this->isPersonalClient = $isPersonalClient;
         $this->isPasswordClient = $isPasswordClient;
         $this->attributes = [];
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->getAttribute('api_key');
     }
 
     public function getId(): ?string
@@ -227,6 +233,21 @@ class NewClient implements NewClientInterface, \JsonSerializable
     public function setScopes(array $value = null)
     {
         $this->setAttribute('scopes', $value);
+
+        return $this;
+    }
+
+    /**
+     * Set client api_key property value used as replacement for client_id and client_secret
+     * during request authorization
+     * 
+     * @param string $key
+     *  
+     * @return static 
+     */
+    public function setApiKey(string $key)
+    {
+        $this->setAttribute('api_key', $key);
 
         return $this;
     }

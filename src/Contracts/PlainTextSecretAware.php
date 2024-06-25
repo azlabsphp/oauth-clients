@@ -16,11 +16,19 @@ namespace Drewlabs\Oauth\Clients\Contracts;
 interface PlainTextSecretAware
 {
     /**
-     * The temporary non-hashed client secret.
-     *
-     * This is only available once during the request that created the client.
-     *
+     * @deprecated Use `getPlainSecret()` instead
+     * 
      * @return string|null
      */
     public function getPlainSecretAttribute();
+
+
+    /**
+     * returns plain text secret key of the client
+     * 
+     * **Note** plain secret value is only available on newly created instances
+     * 
+     * @return null|string 
+     */
+    public function getPlainTextSecret(): ?string;
 }

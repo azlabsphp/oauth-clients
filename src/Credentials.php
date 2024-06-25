@@ -17,14 +17,10 @@ use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 
 class Credentials implements CredentialsIdentityInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $secret;
 
     /**

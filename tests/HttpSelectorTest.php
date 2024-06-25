@@ -22,7 +22,7 @@ class HttpSelectorTest extends TestCase
 {
     public function test_invoke_return_instance_of_client()
     {
-        $http = $this->createSelector();
+        $http = $this->createQueryClient();
         $client = $http->__invoke(new Credentials('bdcf5a49-341e-4688-8bba-755237ecfaa1', '02afd968d07c308b6eda2fcf5915878a079f1bbf'));
         $this->assertInstanceOf(ClientInterface::class, $client);
         $this->assertTrue($client->firstParty());
@@ -31,13 +31,13 @@ class HttpSelectorTest extends TestCase
 
     public function test_invoke_return_null()
     {
-        $selector = $this->createSelector();
+        $selector = $this->createQueryClient();
         $client = $selector->__invoke(new Credentials('bdcf5a49-341e-4688-8bba-755237ecfaa1', '02afd968d07c308b6eda2fcf5915878a079f1f'));
         $this->assertNotInstanceOf(ClientInterface::class, $client);
         $this->assertNull($client);
     }
 
-    private function createSelector()
+    private function createQueryClient()
     {
         $client = new HttpQueryClientStub(new HttpClientStub(), new Psr17Factory(), new Psr17Factory());
 

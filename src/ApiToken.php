@@ -17,9 +17,7 @@ use Drewlabs\Oauth\Clients\Contracts\SecretIdentityInterface;
 
 class ApiToken implements SecretIdentityInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $token;
 
     /**

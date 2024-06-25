@@ -13,23 +13,23 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients;
 
+use Drewlabs\Oauth\Clients\Contracts\ApiKeyAware;
 use Drewlabs\Oauth\Clients\Contracts\AttributesAware;
 use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
 use Drewlabs\Oauth\Clients\Contracts\GrantTypesAware;
 use Drewlabs\Oauth\Clients\Contracts\PlainTextSecretAware;
 use Drewlabs\Oauth\Clients\Contracts\RedirectUrlAware;
 use Drewlabs\Oauth\Clients\Contracts\ScopeInterface;
+use Drewlabs\Oauth\Clients\Contracts\Validatable;
+use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\Exceptions\MissingScopesException;
 
-class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, RedirectUrlAware
+class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, RedirectUrlAware, ApiKeyAware, Validatable
 {
-    /**
-     * @var AttributesAware
-     */
+    /**  @var AttributesAware */
     private $base;
 
-    /**
-     * @var string|null
-     */
+    /** @var string|null */
     private $plainTextSecret;
 
     /**
@@ -39,6 +39,48 @@ class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, 
     {
         $this->base = $base;
         $this->plainTextSecret = $plainTextSecret;
+    }
+
+    public function isValid(array $scopes = [], ?string $ip = null): bool
+    {
+
+        // Case the client is revoked, we throw an authorization exception
+        if ($this->isRevoked()) {
+            throw new AuthorizationException('client has been revoked');
+        }
+
+        // Case client does not have the required scopes we throw a Missing scope exception
+        if (!$this->hasScope($scopes)) {
+            $scopes = $scopes instanceof ScopeInterface ? (string) $scopes : $scopes;
+            $scopes = \is_string($scopes) ? [$scopes] : $scopes;
+            throw new MissingScopesException($this->getKey(), array_diff($this->getScopes(), $scopes));
+        }
+
+        // Case the client is a first party client, we do not check for
+        // ip address as first party clients are intended to have administration privilege
+        // and should not be used by third party applications
+        if ($this->firstParty()) {
+            return true;
+        }
+
+        // Provide the client request headers in the proxy request headers definition Get Client IP Addresses
+        $ips = null !== ($ips = $this->getIpAddresses()) ? $ips : [];
+
+        // Check whether * exists in the list of client ips
+        if (!\in_array('*', $ips, true) && (null !== $ip)) {
+            // // Return the closure handler for the next middleware
+            // Get the request IP address
+            if (!\in_array($ip, $ips, true)) {
+                throw new AuthorizationException(sprintf('unauthorized request origin %s', \is_array($ip) ? implode(',', $ip) : $ip));
+            }
+        }
+
+        return true;
+    }
+
+    public function getApiKey(): ?string
+    {
+        return $this->base->getAttribute('api_key');
     }
 
     public function getRedirectUrl(): ?string
@@ -60,6 +102,11 @@ class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, 
 
     public function getPlainSecretAttribute()
     {
+        return $this->getPlainTextSecret();
+    }
+
+    public function getPlainTextSecret(): ?string
+    {
         return $this->plainTextSecret;
     }
 
@@ -80,7 +127,12 @@ class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, 
 
     public function getIpAddressesAttribute()
     {
-        return $this->base->getAttribute('ip_addresses');
+        return $this->getIpAddresses();
+    }
+    public function getIpAddresses(): array
+    {
+        $values = $this->base->getAttribute('ip_addresses');
+        return \is_string($values) ? explode(',', $values) : (array) $values;
     }
 
     public function firstParty()

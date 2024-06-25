@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Contracts\ServerRequestFacade;
 
 class JwtAuthorizationHeaderCredentialsFactory implements CredentialsFactoryInterface
@@ -45,7 +46,7 @@ class JwtAuthorizationHeaderCredentialsFactory implements CredentialsFactoryInte
         $this->key = $key;
     }
 
-    public function create($request)
+    public function create($request): ?CredentialsIdentityInterface
     {
         $jwtToken = $this->serverRequest->getAuthorizationHeader($request, $this->method);
 

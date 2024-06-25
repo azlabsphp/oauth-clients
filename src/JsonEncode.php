@@ -15,14 +15,10 @@ namespace Drewlabs\Oauth\Clients;
 
 class JsonEncode
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $flags;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $depth;
 
     /**
@@ -35,7 +31,7 @@ class JsonEncode
     }
 
     /**
-     * functional interface for json encoding data.
+     * Encodes a json string
      *
      * @param mixed $data
      *

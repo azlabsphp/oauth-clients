@@ -14,7 +14,11 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Contracts\ServerRequestFacade;
+use Drewlabs\Oauth\Clients\Exceptions\InvalidTokenException;
+use Drewlabs\Oauth\Clients\Exceptions\InvalidTokenSignatureException;
+use Drewlabs\Oauth\Clients\Exceptions\TokenExpiresException;
 
 class JwtCookieCredentialsFactory implements CredentialsFactoryInterface
 {
@@ -45,7 +49,13 @@ class JwtCookieCredentialsFactory implements CredentialsFactoryInterface
         $this->key = $key;
     }
 
-    public function create($request)
+    /**
+     * @param mixed $request 
+     * @throws InvalidTokenException 
+     * @throws InvalidTokenSignatureException 
+     * @throws TokenExpiresException 
+     */
+    public function create($request): ?CredentialsIdentityInterface
     {
         $jwtToken = $this->serverRequest->getRequestCookie($request, $this->name);
 

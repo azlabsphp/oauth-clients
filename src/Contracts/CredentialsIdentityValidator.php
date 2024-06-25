@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients\Contracts;
 
 /**
+ * @deprecated Clients should be able to provided a method that checks if they are valid
+ * 
  * @method ClientInterface validate($clientId, $secret, $scopes = [], $requestIp = null)
  */
 interface CredentialsIdentityValidator

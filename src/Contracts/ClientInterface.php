@@ -13,6 +13,10 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Contracts;
 
+
+/**
+ * @mixin Validatable
+ */
 interface ClientInterface
 {
     /**
@@ -37,9 +41,14 @@ interface ClientInterface
     public function getUserId();
 
     /**
-     * Return the ip_addresses attributes of the client.
-     *
-     * @return array
+     * returns the list of authorized ip addresses
+     * 
+     * @return array 
+     */
+    public function getIpAddresses(): array;
+
+    /**
+     * @deprecated Use `getIpAddresses()` instead
      */
     public function getIpAddressesAttribute();
 

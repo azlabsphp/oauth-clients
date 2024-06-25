@@ -14,13 +14,12 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Contracts\ServerRequestFacade;
 
 class BasicAuthorizationCredentialsFactory implements CredentialsFactoryInterface
 {
-    /**
-     * @var ServerRequestFacade
-     */
+    /** @var ServerRequestFacade */
     private $serverRequest;
 
     /**
@@ -34,7 +33,7 @@ class BasicAuthorizationCredentialsFactory implements CredentialsFactoryInterfac
         $this->serverRequest = $serverRequest;
     }
 
-    public function create($request)
+    public function create($request): ?CredentialsIdentityInterface
     {
         $base64 = $this->serverRequest->getAuthorizationHeader($request, 'basic');
 

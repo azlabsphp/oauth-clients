@@ -157,4 +157,16 @@ class NewClientTest extends TestCase
         // Assert
         $this->assertFalse(boolval($client->isPasswordClient()));
     }
+
+    public function test_new_client_set_api_key_method_modify_client_api_key_property_value()
+    {
+        $client = new NewClient();
+
+        $this->assertTrue(is_null($client->getApiKey()));
+
+        $apiKey = sprintf("k_%s", base64_encode(bin2hex(random_bytes(15))));
+        $client = $client->setApiKey($apiKey);
+
+        $this->assertEquals($apiKey, $client->getApiKey());
+    }
 }

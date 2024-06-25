@@ -21,3 +21,9 @@
 ## [0.3.0] [2024-06-18]
 
 - Removed deprecated `ClientQueryInterface` implementation
+
+## [0.3.1] [2024-06-25]
+
+- Added support for `api_key` attribute that can be null and can be used instead of client_id and client_secret for authentication
+- Added a breaking change `getPlainTextSecret` to PlainTextSecretAware interface [classes that implement that interface should add the newly added method implementation]
+- Added an `\Drewlabs\Oauth\Clients\Contracts\ApiKeyClientsRepository` to support api key clients

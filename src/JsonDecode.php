@@ -15,19 +15,13 @@ namespace Drewlabs\Oauth\Clients;
 
 class JsonDecode
 {
-    /**
-     * @var bool
-     */
+    /** @var bool*/
     private $associative = false;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $flags;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $depth;
 
     /**
@@ -46,7 +40,7 @@ class JsonDecode
     }
 
     /**
-     * funtional interface for json decoding string.
+     * Decodes a json string
      *
      * @return mixed
      */

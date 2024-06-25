@@ -15,12 +15,8 @@ namespace Drewlabs\Oauth\Clients;
 
 class Base64URLDecode
 {
-    public function __construct()
-    {
-    }
-
     /**
-     * Functional interface to decode a base64 url encoded string.
+     * decode a base64 url encoded string.
      */
     public function __invoke(string $base64): string
     {

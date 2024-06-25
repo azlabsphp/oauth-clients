@@ -19,14 +19,10 @@ use Drewlabs\Oauth\Clients\Exceptions\MalformedBasicAuthException;
 
 class BasicAuthCredentials implements CredentialsIdentityInterface
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $id;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $secret;
 
     /**

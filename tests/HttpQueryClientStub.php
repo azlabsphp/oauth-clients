@@ -23,32 +23,23 @@ use Psr\Http\Client\ClientInterface as PsrClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use RuntimeException;
 
 final class HttpQueryClientStub implements ClientProviderInterface
 {
-    /**
-     * @var PsrClientInterface
-     */
+    /** @var PsrClientInterface */
     private $client;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $url;
 
-    /**
-     * @var RequestFactoryInterface
-     */
+    /**  @var RequestFactoryInterface */
     private $requestFactory;
 
-    /**
-     * @var StreamFactoryInterface
-     */
+    /** @var StreamFactoryInterface */
     private $streamFactory;
 
-    /**
-     * @var array
-     */
+    /**  @var array */
     private $headers = [];
 
     /**
@@ -63,15 +54,23 @@ final class HttpQueryClientStub implements ClientProviderInterface
         $this->streamFactory = $streamFactory;
     }
 
+    public function findByApiKey(string $apiKey): ?ClientInterface
+    {
+        throw new RuntimeException('Unimplemented method');
+    }
+
     public function __invoke(CredentialsIdentityInterface $credentials): ?ClientInterface
     {
         return $this->findByCredentials($credentials);
     }
 
-    public function findByCredentials(CredentialsIdentityInterface $credentials): ?ClientInterface
+    public function findByCredentials(CredentialsIdentityInterface $identity): ?ClientInterface
     {
         try {
-            $request = $this->writeRequestBody($this->requestFactory->createRequest('POST', $this->url), $credentials);
+            $request = $this->writeRequestBody($this->requestFactory->createRequest('POST', $this->url), [
+                'client' => (string) $identity->getId(), 
+                'secret' => (string) $identity->getSecret()
+            ]);
             $response = $this->client->sendRequest($this->setHeaders($request));
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode <= 204) {
@@ -114,10 +113,10 @@ final class HttpQueryClientStub implements ClientProviderInterface
      *
      * @return RequestInterface
      */
-    private function writeRequestBody(RequestInterface $request, CredentialsIdentityInterface $identity)
+    private function writeRequestBody(RequestInterface $request, array $body)
     {
         $request = $request->withHeader('Content-Type', 'application/json');
-        $request = $request->withBody($this->streamFactory->createStream($this->jsonEncode(['client' => (string) $identity->getId(), 'secret' => (string) $identity->getSecret()])));
+        $request = $request->withBody($this->streamFactory->createStream($this->jsonEncode($body)));
 
         return $request;
     }
@@ -155,7 +154,7 @@ final class HttpQueryClientStub implements ClientProviderInterface
     {
         $json = json_encode($value, $options, $depth);
         if (\JSON_ERROR_NONE !== json_last_error()) {
-            throw new \InvalidArgumentException('json_encode error: '.json_last_error_msg());
+            throw new \InvalidArgumentException('json_encode error: ' . json_last_error_msg());
         }
         /* @var string */
         return $json;

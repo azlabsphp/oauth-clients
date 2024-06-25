@@ -17,9 +17,7 @@ use Drewlabs\Oauth\Clients\Contracts\HashesClientSecret;
 
 class BcryptHashClientSecret implements HashesClientSecret
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $options;
 
     /**

@@ -35,7 +35,7 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
     }
 
 
-    public function create($request)
+    public function create($request): ?CredentialsIdentityInterface
     {
         // query identity from request cookie
         $credentials = $this->fromCookie($request);

@@ -5,12 +5,11 @@ namespace Drewlabs\Oauth\Clients;
 use Closure;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsFactoryInterface;
 use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 
 class CredentialsPipelineFactory implements CredentialsFactoryInterface
 {
-    /**
-     * @var CredentialsFactoryInterface[]
-     */
+    /** @var CredentialsFactoryInterface[] */
     private $factories = [];
 
     /**
@@ -40,9 +39,9 @@ class CredentialsPipelineFactory implements CredentialsFactoryInterface
      * 
      * @param mixed $request
      * 
-     * @return CredentialsIdentityInterface
+     * @return null|CredentialsIdentityInterface
      */
-    public function create($request)
+    public function create($request): ?CredentialsIdentityInterface
     {
         $factories = array_filter($this->factories ?? [], function ($factory) {
             return null !== $factory;
@@ -69,7 +68,8 @@ class CredentialsPipelineFactory implements CredentialsFactoryInterface
      * Creates a pipeline of function through which the request is processed
      * to create a client credentials instance
      * 
-     * @param callable[] $callbacks 
+     * @param callable[] $callbacks
+     * 
      * @return Closure(mixed $source): mixed 
      */
     private function compose(array $callbacks)
