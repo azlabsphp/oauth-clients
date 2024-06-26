@@ -15,6 +15,7 @@ namespace Drewlabs\Oauth\Clients;
 
 use Drewlabs\Oauth\Clients\Contracts\SecretIdentityInterface;
 
+/** @deprecated will be removed in future releases */
 class ApiToken implements SecretIdentityInterface
 {
     /** @var string */

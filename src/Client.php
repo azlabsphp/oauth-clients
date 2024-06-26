@@ -41,7 +41,7 @@ class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, 
         $this->plainTextSecret = $plainTextSecret;
     }
 
-    public function isValid(array $scopes = [], ?string $ip = null): bool
+    public function validate(array $scopes = [], ?string $ip = null): bool
     {
 
         // Case the client is revoked, we throw an authorization exception

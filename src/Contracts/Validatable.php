@@ -11,7 +11,7 @@ use Drewlabs\Oauth\Clients\Exceptions\MissingScopesException;
  * @deprecated
  * 
  * **Note** This interface is internal as it should not be implemented by outside classes
- *          as `isValid(...)` method will be merged into `ClientInterface` contract.
+ *          as `validate(...)` method will be merged into `ClientInterface` contract.
  *          It's temporary extracted from `ClientInterface` to prevent any breaking change
  *          in existing implementation libraries
  *          
@@ -30,5 +30,5 @@ interface Validatable
      * 
      * @return bool 
      */
-    public function isValid(array $scopes = [], string $ip = null): bool;
+    public function validate(array $scopes = [], string $ip = null): bool;
 }

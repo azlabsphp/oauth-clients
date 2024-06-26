@@ -18,7 +18,7 @@ interface CredentialsFactoryInterface
     /**
      * Returns a (client, secret) tuple from provided request.
      *
-     * @return CredentialsIdentityInterface|SecretIdentityInterface|null
+     * @return null|CredentialsIdentityInterface
      */
     public function create($request): ?CredentialsIdentityInterface;
 }
