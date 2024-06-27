@@ -18,7 +18,7 @@ class CredentialsPipelineFactory implements CredentialsFactoryInterface
      * 
      * @param CredentialsFactoryInterface[] ...$factories
      */
-    public function __construct(array ...$factories)
+    public function __construct(...$factories)
     {
         $this->factory = new CredentialsFactory(...$factories);
     }
