@@ -11,6 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Drewlabs\Oauth\Clients\Tests;
+
 use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
 use Drewlabs\Oauth\Clients\Credentials;
 use Drewlabs\Oauth\Clients\CredentialsValidator;

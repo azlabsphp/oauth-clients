@@ -11,6 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Drewlabs\Oauth\Clients\Tests;
+
+use BadMethodCallException;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Exceptions\TokenExpiresException;
 use Drewlabs\Oauth\Clients\JwtTokenCredentials;
@@ -56,7 +59,6 @@ class JwtTokenCredentialsTest extends TestCase
         $this->assertSame('apikey', $credentials2->getId());
 
         $this->assertSame('apiSecret', $credentials2->getSecret());
-
     }
 
     public function test_jwt_token_credentials_throw_TokenExpires_exception()
@@ -80,6 +82,5 @@ class JwtTokenCredentialsTest extends TestCase
 
         // Act
         $jwtToken = (string) $credentials;
-
     }
 }

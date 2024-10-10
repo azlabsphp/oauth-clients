@@ -11,6 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Drewlabs\Oauth\Clients\Tests;
+
 use Drewlabs\Oauth\Clients\BasicAuthCredentials;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +22,6 @@ class BasicAuthCredentialsTest extends TestCase
     {
         $credentials = new BasicAuthCredentials('apiKey', 'rrssGv2ON3woCDcLGaChYLTtKcPq4Meu');
         $this->assertSame('apiKey', $credentials->getId());
-
     }
 
     public function test_basic_auth_credentials_get_secret()
@@ -34,7 +35,6 @@ class BasicAuthCredentialsTest extends TestCase
         $credentials = new BasicAuthCredentials('apiKey', '6aqidVCrVbQXEVLCScnwYC4xHm01J0XA');
         $this->assertSame(base64_encode(sprintf('%s:%s', 'apiKey', '6aqidVCrVbQXEVLCScnwYC4xHm01J0XA')), $credentials->__toString());
         $this->assertSame(base64_encode(sprintf('%s:%s', 'apiKey', '6aqidVCrVbQXEVLCScnwYC4xHm01J0XA')), (string) $credentials);
-
     }
 
     public function test_basic_auth_credentials_static_new()
@@ -43,6 +43,5 @@ class BasicAuthCredentialsTest extends TestCase
         $basicAuth = BasicAuthCredentials::new($result);
         $this->assertSame('NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0', $basicAuth->getSecret());
         $this->assertSame('apiKey', $basicAuth->getId());
-
     }
 }

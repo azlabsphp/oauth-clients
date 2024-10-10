@@ -11,6 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Drewlabs\Oauth\Clients\Tests;
+
 use Drewlabs\Oauth\Clients\BasicAuthCredentials;
 use Drewlabs\Oauth\Clients\BasicAuthorizationCredentialsFactory;
 
@@ -24,7 +26,7 @@ class BasicAuthorizationCredentialsFactoryTest extends TestCase
     public function test_basic_authorization_credentials_factory_create()
     {
         $request = $this->createServerRequest();
-        $request = $request->withAddedHeader('Authorization', 'Basic '.base64_encode(sprintf('%s:%s', 'apiKey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0')));
+        $request = $request->withAddedHeader('Authorization', 'Basic ' . base64_encode(sprintf('%s:%s', 'apiKey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0')));
 
         // Act
         $credentials = (new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade))->create($request);
@@ -32,7 +34,6 @@ class BasicAuthorizationCredentialsFactoryTest extends TestCase
         // Assert
         $this->assertInstanceOf(BasicAuthCredentials::class, $credentials);
         $this->assertSame('NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0', $credentials->getSecret());
-
     }
 
     public function test_basic_authorization_credentials_factory_create_returns_null_case_basic_credentials_not_provided()

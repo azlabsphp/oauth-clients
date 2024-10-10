@@ -11,6 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Drewlabs\Oauth\Clients\Tests;
+
+use DateTimeImmutable;
 use Drewlabs\Oauth\Clients\NewClient;
 use PHPUnit\Framework\TestCase;
 
@@ -70,7 +73,7 @@ class NewClientTest extends TestCase
     public function test_new_client_set_secret_property_value()
     {
         // Act
-        $client = (new NewClient())->setSecret($bytes = random_int(1000, 10000).time());
+        $client = (new NewClient())->setSecret($bytes = random_int(1000, 10000) . time());
 
         // Assert
         $this->assertSame($bytes, $client->getSecret());
