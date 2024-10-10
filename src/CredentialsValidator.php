@@ -59,18 +59,18 @@ final class CredentialsValidator implements CredentialsIdentityValidator
             throw new AuthorizationException('client has been revoked');
         }
 
-        // Case client does not have the required scopes we throw a Missing scope exception
-        if (!$client->hasScope($scopes)) {
-            $scopes = $scopes instanceof ScopeInterface ? (string) $scopes : $scopes;
-            $scopes = \is_string($scopes) ? [$scopes] : $scopes;
-            throw new MissingScopesException($client->getKey(), array_diff($client->getScopes(), $scopes));
-        }
-
         // Case the client is a first party client, we do not check for
         // ip address as first party clients are intended to have administration privilege
         // and should not be used by third party applications
         if ($client->firstParty()) {
             return $client;
+        }
+
+        // Case client does not have the required scopes we throw a Missing scope exception
+        if (!$client->hasScope($scopes)) {
+            $scopes = $scopes instanceof ScopeInterface ? (string) $scopes : $scopes;
+            $scopes = \is_string($scopes) ? [$scopes] : $scopes;
+            throw new MissingScopesException($client->getKey(), array_diff($client->getScopes(), $scopes));
         }
 
         // ! Provide the client request headers in the proxy request headers definition

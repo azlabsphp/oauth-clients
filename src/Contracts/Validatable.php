@@ -3,7 +3,6 @@
 namespace Drewlabs\Oauth\Clients\Contracts;
 
 use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
-use Drewlabs\Oauth\Clients\Exceptions\MissingScopesException;
 
 /**
  * @internal

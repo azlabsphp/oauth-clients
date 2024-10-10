@@ -49,18 +49,18 @@ class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, 
             throw new AuthorizationException('client has been revoked');
         }
 
-        // Case client does not have the required scopes we throw a Missing scope exception
-        if (!$this->hasScope($scopes)) {
-            $scopes = $scopes instanceof ScopeInterface ? (string) $scopes : $scopes;
-            $scopes = \is_string($scopes) ? [$scopes] : $scopes;
-            throw new MissingScopesException($this->getKey(), array_diff($this->getScopes(), $scopes));
-        }
-
         // Case the client is a first party client, we do not check for
         // ip address as first party clients are intended to have administration privilege
         // and should not be used by third party applications
         if ($this->firstParty()) {
             return true;
+        }
+
+        // Case client does not have the required scopes we throw a Missing scope exception
+        if (!$this->hasScope($scopes)) {
+            $scopes = $scopes instanceof ScopeInterface ? (string) $scopes : $scopes;
+            $scopes = \is_string($scopes) ? [$scopes] : $scopes;
+            throw new MissingScopesException($this->getKey(), array_diff($this->getScopes(), $scopes));
         }
 
         // Provide the client request headers in the proxy request headers definition Get Client IP Addresses
