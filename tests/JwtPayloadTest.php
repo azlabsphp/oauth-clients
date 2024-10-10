@@ -11,6 +11,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Drewlabs\Oauth\Clients\Tests;
+
 use Drewlabs\Oauth\Clients\JwtPayload;
 use PHPUnit\Framework\TestCase;
 
@@ -32,7 +34,6 @@ class JwtPayloadTest extends TestCase
 
         $this->assertSame('John Doe', $jwtPayload->getAttribute('name'));
         $this->assertSame($timestamp, $jwtPayload->getAttribute('iat'));
-
     }
 
     public function test_jwt_payload_get_attribute_return_null_case_no_match_found()
@@ -42,7 +43,6 @@ class JwtPayloadTest extends TestCase
         $jwtPayload = new JwtPayload($attributes);
 
         $this->assertNull($jwtPayload->getAttribute('sub'));
-
     }
 
     public function test_jwt_payload_endode()
@@ -52,7 +52,6 @@ class JwtPayloadTest extends TestCase
         $jwtPayload = new JwtPayload($attributes);
         $is_string = is_string($jwtPayload->encode());
         $this->assertTrue($is_string);
-
     }
 
     public function test_jwt_payload_decode()
@@ -66,6 +65,5 @@ class JwtPayloadTest extends TestCase
         $jwtPayload2 = JwtPayload::decode($encoded);
         $this->assertSame('John Doe', $jwtPayload2->getAttribute('name'));
         $this->assertSame($timestamp, $jwtPayload2->getAttribute('iat'));
-
     }
 }

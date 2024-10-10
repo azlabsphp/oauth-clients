@@ -1,5 +1,7 @@
 <?php
 
+namespace Drewlabs\Oauth\Clients\Tests;
+
 use Drewlabs\Oauth\Clients\BasicAuthCredentials;
 use Drewlabs\Oauth\Clients\BasicAuthorizationCredentialsFactory;
 use Drewlabs\Oauth\Clients\CredentialsPipelineFactory;

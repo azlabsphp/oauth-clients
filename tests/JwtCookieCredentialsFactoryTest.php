@@ -11,8 +11,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+namespace Drewlabs\Oauth\Clients\Tests;
+
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Drewlabs\Oauth\Clients\JwtCookieCredentialsFactory;
 use Drewlabs\Oauth\Clients\JwtTokenCredentials;
 use Drewlabs\Oauth\Clients\Tests\Stubs\PsrServerRequestFacade;
@@ -48,7 +49,6 @@ class JwtCookieCredentialsFactoryTest extends TestCase
 
         // Assert
         $this->assertNull($credentials);
-
     }
 
     private function createServerRequest()
