@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Contracts;
 
-
 /**
  * @mixin Validatable
  */
@@ -28,8 +27,6 @@ interface ClientInterface
 
     /**
      * Returns the client name property or attribute.
-     *
-     * @return string
      */
     public function getName(): ?string;
 
@@ -41,9 +38,7 @@ interface ClientInterface
     public function getUserId();
 
     /**
-     * returns the list of authorized ip addresses
-     * 
-     * @return array 
+     * returns the list of authorized ip addresses.
      */
     public function getIpAddresses(): array;
 

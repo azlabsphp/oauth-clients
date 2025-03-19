@@ -25,15 +25,12 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
     private $serverRequest;
 
     /**
-     * Create class instance
-     * 
-     * @param ServerRequestFacade $serverRequest 
+     * Create class instance.
      */
     public function __construct(ServerRequestFacade $serverRequest)
     {
         $this->serverRequest = $serverRequest;
     }
-
 
     public function create($request): ?CredentialsIdentityInterface
     {
@@ -103,6 +100,7 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
         if (null === $secret && !empty($value = $this->serverRequest->getRequestAttribute($request, 'client_secret'))) {
             return $value;
         }
+
         return $secret;
     }
 
@@ -113,6 +111,7 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
         if (null === $clientId && !empty($value = $this->serverRequest->getRequestAttribute($request, 'client_id'))) {
             return $value;
         }
+
         return $clientId;
     }
 }

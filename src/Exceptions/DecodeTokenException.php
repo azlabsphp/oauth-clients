@@ -18,7 +18,7 @@ class DecodeTokenException extends AuthorizationException
     /**
      * Creates class instance.
      */
-    public function __construct(string $token, string $message = null)
+    public function __construct(string $token, ?string $message = null)
     {
         $message = $message ?? sprintf('Error while decoding %s, unsupported format', $token);
 

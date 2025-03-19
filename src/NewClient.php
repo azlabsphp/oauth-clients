@@ -44,12 +44,10 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      * Creates class instance.
      *
      * @param string|int $id
-     * @param bool       $isPersonalClient
-     * @param bool       $isPasswordClient
      *
      * @return void
      */
-    public function __construct($id = null, bool $isPersonalClient = null, bool $isPasswordClient = null)
+    public function __construct($id = null, ?bool $isPersonalClient = null, ?bool $isPasswordClient = null)
     {
         $this->id = null !== $id ? (string) $id : $id;
         $this->isPersonalClient = $isPersonalClient;
@@ -77,7 +75,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setName(string $value = null)
+    public function setName(?string $value = null)
     {
         $this->setAttribute('name', $value);
 
@@ -94,7 +92,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setUserId(string $value = null)
+    public function setUserId(?string $value = null)
     {
         $this->setAttribute('user_id', $value);
 
@@ -111,7 +109,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setRedirectUrl(string $value = null)
+    public function setRedirectUrl(?string $value = null)
     {
         $this->setAttribute('redirect', $value);
 
@@ -128,7 +126,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setProvider(string $value = null)
+    public function setProvider(?string $value = null)
     {
         $this->setAttribute('provider', $value);
 
@@ -145,7 +143,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setIpAddresses(array $value = null)
+    public function setIpAddresses(?array $value = null)
     {
         $this->setAttribute('ip_addresses', $value);
 
@@ -162,7 +160,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setSecret(string $value = null)
+    public function setSecret(?string $value = null)
     {
         $this->setAttribute('secret', $value);
 
@@ -179,7 +177,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setAppUrl(string $value = null)
+    public function setAppUrl(?string $value = null)
     {
         $this->setAttribute('client_url', $value);
 
@@ -196,7 +194,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setRevoked(bool $value = null)
+    public function setRevoked(?bool $value = null)
     {
         $this->setAttribute('revoked', $value);
 
@@ -213,7 +211,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setExpiresAt(string $value = null)
+    public function setExpiresAt(?string $value = null)
     {
         $this->setAttribute('expires_on', $value);
 
@@ -230,7 +228,7 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
      *
      * @return static
      */
-    public function setScopes(array $value = null)
+    public function setScopes(?array $value = null)
     {
         $this->setAttribute('scopes', $value);
 
@@ -239,11 +237,9 @@ class NewClient implements NewClientInterface, ApiKeyAware, \JsonSerializable
 
     /**
      * Set client api_key property value used as replacement for client_id and client_secret
-     * during request authorization
-     * 
-     * @param string $key
-     *  
-     * @return static 
+     * during request authorization.
+     *
+     * @return static
      */
     public function setApiKey(string $key)
     {

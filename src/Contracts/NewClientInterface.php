@@ -37,15 +37,11 @@ interface NewClientInterface
 
     /**
      * Returns client provider value.
-     *
-     * @return string
      */
     public function getProvider(): ?string;
 
     /**
      * Returns client authorized ip address value.
-     *
-     * @return array
      */
     public function getIpAddresses(): ?array;
 
@@ -71,8 +67,6 @@ interface NewClientInterface
 
     /**
      * Return list of client scopes.
-     *
-     * @return array
      */
     public function getScopes(): ?array;
 

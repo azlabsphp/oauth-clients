@@ -38,9 +38,7 @@ class JwtCookieCredentialsFactory implements CredentialsFactoryInterface
     private $serverRequest;
 
     /**
-     * Create class instance
-     * 
-     * @param ServerRequestFacade $serverRequest 
+     * Create class instance.
      */
     public function __construct(ServerRequestFacade $serverRequest, string $key, string $name = 'jwt-cookie')
     {
@@ -50,10 +48,11 @@ class JwtCookieCredentialsFactory implements CredentialsFactoryInterface
     }
 
     /**
-     * @param mixed $request 
-     * @throws InvalidTokenException 
-     * @throws InvalidTokenSignatureException 
-     * @throws TokenExpiresException 
+     * @param mixed $request
+     *
+     * @throws InvalidTokenException
+     * @throws InvalidTokenSignatureException
+     * @throws TokenExpiresException
      */
     public function create($request): ?CredentialsIdentityInterface
     {

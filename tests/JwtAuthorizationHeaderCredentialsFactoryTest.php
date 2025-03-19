@@ -31,7 +31,7 @@ class JwtAuthorizationHeaderCredentialsFactoryTest extends TestCase
         $serverRequest = $serverRequest->withAddedHeader('Authorization', sprintf('jwt %s', $jwtToken));
 
         // Act
-        $credentials = (new JwtAuthorizationHeaderCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword'))->create($serverRequest);
+        $credentials = (new JwtAuthorizationHeaderCredentialsFactory(new PsrServerRequestFacade(), 'SuperSecretPassword'))->create($serverRequest);
 
         // Assert
         $this->assertInstanceOf(CredentialsIdentityInterface::class, $credentials);
@@ -45,7 +45,7 @@ class JwtAuthorizationHeaderCredentialsFactoryTest extends TestCase
         $serverRequest = $this->createServerRequest();
 
         // Act
-        $credentials = (new JwtAuthorizationHeaderCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword'))->create($serverRequest);
+        $credentials = (new JwtAuthorizationHeaderCredentialsFactory(new PsrServerRequestFacade(), 'SuperSecretPassword'))->create($serverRequest);
 
         // Assert
         $this->assertNull($credentials);

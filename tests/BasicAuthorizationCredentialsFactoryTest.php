@@ -26,10 +26,10 @@ class BasicAuthorizationCredentialsFactoryTest extends TestCase
     public function test_basic_authorization_credentials_factory_create()
     {
         $request = $this->createServerRequest();
-        $request = $request->withAddedHeader('Authorization', 'Basic ' . base64_encode(sprintf('%s:%s', 'apiKey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0')));
+        $request = $request->withAddedHeader('Authorization', 'Basic '.base64_encode(sprintf('%s:%s', 'apiKey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0')));
 
         // Act
-        $credentials = (new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade))->create($request);
+        $credentials = (new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade()))->create($request);
 
         // Assert
         $this->assertInstanceOf(BasicAuthCredentials::class, $credentials);
@@ -40,7 +40,7 @@ class BasicAuthorizationCredentialsFactoryTest extends TestCase
     {
         $request = $this->createServerRequest();
         // Act
-        $credentials = (new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade))->create($request);
+        $credentials = (new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade()))->create($request);
         $this->assertNull($credentials);
     }
 

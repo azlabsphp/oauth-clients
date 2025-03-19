@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Tests;
 
-use BadMethodCallException;
 use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\Exceptions\TokenExpiresException;
 use Drewlabs\Oauth\Clients\JwtTokenCredentials;
@@ -78,7 +77,7 @@ class JwtTokenCredentialsTest extends TestCase
         $credentials = new JwtTokenCredentials('SuperSecretPassword');
 
         // Assert
-        $this->expectException(BadMethodCallException::class);
+        $this->expectException(\BadMethodCallException::class);
 
         // Act
         $jwtToken = (string) $credentials;

@@ -31,7 +31,7 @@ class JsonEncode
     }
 
     /**
-     * Encodes a json string
+     * Encodes a json string.
      *
      * @param mixed $data
      *
@@ -80,6 +80,7 @@ class JsonEncode
             \call_user_func_array($sort, [&$list]);
         };
         $callable($value);
+
         // endregion Internal function
         return $value;
     }

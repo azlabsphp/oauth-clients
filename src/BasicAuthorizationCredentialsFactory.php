@@ -23,10 +23,9 @@ class BasicAuthorizationCredentialsFactory implements CredentialsFactoryInterfac
     private $serverRequest;
 
     /**
-     * Create class instance
-     * 
-     * @param ServerRequestFacade $serverRequest 
-     * @return void 
+     * Create class instance.
+     *
+     * @return void
      */
     public function __construct(ServerRequestFacade $serverRequest)
     {

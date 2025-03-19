@@ -38,14 +38,14 @@ interface ClientsRepository
      *
      * @return ClientInterface|mixed
      */
-    public function updateById($id, NewClientInterface $attributes, \Closure $callback = null);
+    public function updateById($id, NewClientInterface $attributes, ?\Closure $callback = null);
 
     /**
      * Creates a new client instance.
      *
      * @return ClientInterface&PlainTextSecretAware&mixed
      */
-    public function create(NewClientInterface $attributes, \Closure $callback = null);
+    public function create(NewClientInterface $attributes, ?\Closure $callback = null);
 
     /**
      * Delete client using `id` property.
@@ -54,5 +54,5 @@ interface ClientsRepository
      *
      * @return bool
      */
-    public function deleteById($id, \Closure $callback = null);
+    public function deleteById($id, ?\Closure $callback = null);
 }

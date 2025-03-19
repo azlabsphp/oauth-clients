@@ -31,7 +31,7 @@ class ClientsStub
                 'password_client' => false,
                 'scopes' => ['*'],
                 'revoked' => false,
-                'api_key' => sprintf("k_%s", base64_encode(bin2hex(random_bytes(15))))
+                'api_key' => sprintf('k_%s', base64_encode(bin2hex(random_bytes(15)))),
             ],
             [
                 'id' => 'e28df7be-e9f7-4bd4-a689-c8a8d51afe96',
@@ -45,7 +45,7 @@ class ClientsStub
                 'password_client' => false,
                 'scopes' => ['strage:object:write', 'strage:object:read'],
                 'revoked' => false,
-                'api_key' => sprintf("k_%s", base64_encode(bin2hex(random_bytes(15))))
+                'api_key' => sprintf('k_%s', base64_encode(bin2hex(random_bytes(15)))),
             ],
             [
                 'id' => '1470d157-8378-4736-8e5f-443320b79832',
@@ -59,7 +59,7 @@ class ClientsStub
                 'password_client' => false,
                 'scopes' => null,
                 'revoked' => true,
-                'api_key' => sprintf("k_%s", base64_encode(bin2hex(random_bytes(15))))
+                'api_key' => sprintf('k_%s', base64_encode(bin2hex(random_bytes(15)))),
             ],
         ];
     }

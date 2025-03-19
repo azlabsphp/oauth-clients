@@ -17,8 +17,6 @@ use Drewlabs\Oauth\Clients\Contracts\ClientInterface;
 use Drewlabs\Oauth\Clients\Credentials;
 use Drewlabs\Oauth\Clients\CredentialsValidator;
 use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
-use Drewlabs\Oauth\Clients\Tests\HttpClientStub;
-use Drewlabs\Oauth\Clients\Tests\HttpQueryClientStub;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
 

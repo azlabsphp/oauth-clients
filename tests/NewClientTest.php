@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Drewlabs\Oauth\Clients\Tests;
 
-use DateTimeImmutable;
 use Drewlabs\Oauth\Clients\NewClient;
 use PHPUnit\Framework\TestCase;
 
@@ -73,7 +72,7 @@ class NewClientTest extends TestCase
     public function test_new_client_set_secret_property_value()
     {
         // Act
-        $client = (new NewClient())->setSecret($bytes = random_int(1000, 10000) . time());
+        $client = (new NewClient())->setSecret($bytes = random_int(1000, 10000).time());
 
         // Assert
         $this->assertSame($bytes, $client->getSecret());
@@ -100,10 +99,10 @@ class NewClientTest extends TestCase
     public function test_new_client_set_expires_at_property_value()
     {
         // Act
-        $client = (new NewClient())->setExpiresAt((new DateTimeImmutable())->modify('+1 days')->format('Y-m-d H:i:s'));
+        $client = (new NewClient())->setExpiresAt((new \DateTimeImmutable())->modify('+1 days')->format('Y-m-d H:i:s'));
 
         // Assert
-        $this->assertSame((new DateTimeImmutable())->modify('+1 days')->format('Y-m-d H:i:s'), $client->getExpiresAt());
+        $this->assertSame((new \DateTimeImmutable())->modify('+1 days')->format('Y-m-d H:i:s'), $client->getExpiresAt());
     }
 
     public function test_new_client_set_scopes_at_property_value()
@@ -135,7 +134,7 @@ class NewClientTest extends TestCase
         $client = new NewClient();
 
         // Assert
-        $this->assertFalse(boolval($client->isPersonalClient()));
+        $this->assertFalse((bool) $client->isPersonalClient());
     }
 
     public function test_new_client_with_third_parameter_true_creates_a_personal_access_client()
@@ -158,18 +157,18 @@ class NewClientTest extends TestCase
         $client = new NewClient();
 
         // Assert
-        $this->assertFalse(boolval($client->isPasswordClient()));
+        $this->assertFalse((bool) $client->isPasswordClient());
     }
 
     public function test_new_client_set_api_key_method_modify_client_api_key_property_value()
     {
         $client = new NewClient();
 
-        $this->assertTrue(is_null($client->getApiKey()));
+        $this->assertTrue(null === $client->getApiKey());
 
-        $apiKey = sprintf("k_%s", base64_encode(bin2hex(random_bytes(15))));
+        $apiKey = sprintf('k_%s', base64_encode(bin2hex(random_bytes(15))));
         $client = $client->setApiKey($apiKey);
 
-        $this->assertEquals($apiKey, $client->getApiKey());
+        $this->assertSame($apiKey, $client->getApiKey());
     }
 }

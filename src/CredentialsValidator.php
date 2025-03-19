@@ -27,7 +27,7 @@ use Drewlabs\Oauth\Clients\Exceptions\MissingScopesException;
  */
 final class CredentialsValidator implements CredentialsIdentityValidator
 {
-    /**  @var \Closure|ClientProviderInterface */
+    /** @var \Closure|ClientProviderInterface */
     private $provider;
 
     /**

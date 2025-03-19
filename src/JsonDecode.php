@@ -15,7 +15,7 @@ namespace Drewlabs\Oauth\Clients;
 
 class JsonDecode
 {
-    /** @var bool*/
+    /** @var bool */
     private $associative = false;
 
     /** @var int */
@@ -40,7 +40,7 @@ class JsonDecode
     }
 
     /**
-     * Decodes a json string
+     * Decodes a json string.
      *
      * @return mixed
      */

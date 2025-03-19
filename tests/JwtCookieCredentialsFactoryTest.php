@@ -31,7 +31,7 @@ class JwtCookieCredentialsFactoryTest extends TestCase
         $serverRequest = $serverRequest->withCookieParams(['jwt-cookie' => $jwtToken]);
 
         // Act
-        $credentials = (new JwtCookieCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword'))->create($serverRequest);
+        $credentials = (new JwtCookieCredentialsFactory(new PsrServerRequestFacade(), 'SuperSecretPassword'))->create($serverRequest);
 
         // Assert
         $this->assertInstanceOf(CredentialsIdentityInterface::class, $credentials);
@@ -45,7 +45,7 @@ class JwtCookieCredentialsFactoryTest extends TestCase
         $serverRequest = $this->createServerRequest();
 
         // Act
-        $credentials = (new JwtCookieCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword'))->create($serverRequest);
+        $credentials = (new JwtCookieCredentialsFactory(new PsrServerRequestFacade(), 'SuperSecretPassword'))->create($serverRequest);
 
         // Assert
         $this->assertNull($credentials);

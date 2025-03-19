@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the drewlabs namespace.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drewlabs\Oauth\Clients\Tests\Stubs;
 
 use Drewlabs\Oauth\Clients\Contracts\ServerRequestFacade;
@@ -7,20 +18,22 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class PsrServerRequestFacade implements ServerRequestFacade
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @param ServerRequestInterface $request
      */
     public function getRequestCookie($request, ?string $name = null)
     {
         $cookies = $request->getCookieParams();
+
         return $cookies[$name] ?? null;
     }
 
     /**
-     * @inheritDoc
-     * @param ServerRequestInterface $request 
+     * {@inheritDoc}
+     *
+     * @param ServerRequestInterface $request
      */
     public function getRequestIp($request)
     {
@@ -28,7 +41,8 @@ class PsrServerRequestFacade implements ServerRequestFacade
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @param ServerRequestInterface $request
      */
     public function getRequestHeader($request, string $name, $default = null)
@@ -45,7 +59,8 @@ class PsrServerRequestFacade implements ServerRequestFacade
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
      * @param ServerRequestInterface $request
      */
     public function getRequestAttribute($request, string $name)
@@ -61,47 +76,35 @@ class PsrServerRequestFacade implements ServerRequestFacade
         if (isset($query[$name])) {
             return $query[$name];
         }
-        // Search in the request parsed body   
+        // Search in the request parsed body
         $body = (array) ($request->getParsedBody() ?? []);
         if (isset($body[$name])) {
             return $body[$name];
         }
     }
 
-    public function getAuthorizationHeader($request, string $method = null)
+    public function getAuthorizationHeader($request, ?string $method = null)
     {
         $header = $this->getRequestHeader($request, 'authorization');
         if (null === $header) {
             return null;
         }
-        $header = is_array($header) ? array_pop($header) : $header;
+        $header = \is_array($header) ? array_pop($header) : $header;
         if (null === $header) {
             return null;
         }
         if (!$this->startsWith(strtolower($header), $method)) {
             return null;
         }
+
         return trim(str_ireplace($method, '', $header));
-    }
-
-    /**
-     * checks if `$haystack` string starts with `$needle`.
-     *
-     * @return bool
-     */
-    private function startsWith(string $haystack, string $needle)
-    {
-        if (version_compare(\PHP_VERSION, '8.0.0') >= 0) {
-            return str_starts_with($haystack, $needle);
-        }
-
-        return ('' === $needle) || (mb_substr($haystack, 0, mb_strlen($needle)) === $needle);
     }
 
     /**
      * returns a list of ip addresses.
      *
      * @param ServerRequestInterface $request
+     *
      * @return string[]
      */
     public function getRequestIps($request)
@@ -130,6 +133,20 @@ class PsrServerRequestFacade implements ServerRequestFacade
     }
 
     /**
+     * checks if `$haystack` string starts with `$needle`.
+     *
+     * @return bool
+     */
+    private function startsWith(string $haystack, string $needle)
+    {
+        if (version_compare(\PHP_VERSION, '8.0.0') >= 0) {
+            return str_starts_with($haystack, $needle);
+        }
+
+        return ('' === $needle) || (mb_substr($haystack, 0, mb_strlen($needle)) === $needle);
+    }
+
+    /**
      * returns the first element in a list.
      *
      * @return mixed
@@ -143,12 +160,13 @@ class PsrServerRequestFacade implements ServerRequestFacade
      * get server param value.
      *
      * @param ServerRequestInterface $request
-     * 
+     *
      * @return array|string
      */
     private function server($request, string $key)
     {
         $server = $request->getServerParams() ?? [];
+
         return $key ? $server[$key] ?? null : $server;
     }
 }

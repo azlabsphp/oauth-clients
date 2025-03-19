@@ -50,7 +50,7 @@ class JwtPayloadTest extends TestCase
         $timestamp = time();
         $attributes = ['name' => 'John Doe', 'iat' => $timestamp];
         $jwtPayload = new JwtPayload($attributes);
-        $is_string = is_string($jwtPayload->encode());
+        $is_string = \is_string($jwtPayload->encode());
         $this->assertTrue($is_string);
     }
 

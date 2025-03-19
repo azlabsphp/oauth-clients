@@ -26,7 +26,7 @@ use Drewlabs\Oauth\Clients\Exceptions\MissingScopesException;
 
 class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, RedirectUrlAware, ApiKeyAware, Validatable
 {
-    /**  @var AttributesAware */
+    /** @var AttributesAware */
     private $base;
 
     /** @var string|null */
@@ -35,7 +35,7 @@ class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, 
     /**
      * Create client instance.
      */
-    public function __construct(AttributesAware $base, string $plainTextSecret = null)
+    public function __construct(AttributesAware $base, ?string $plainTextSecret = null)
     {
         $this->base = $base;
         $this->plainTextSecret = $plainTextSecret;
@@ -129,9 +129,11 @@ class Client implements ClientInterface, GrantTypesAware, PlainTextSecretAware, 
     {
         return $this->getIpAddresses();
     }
+
     public function getIpAddresses(): array
     {
         $values = $this->base->getAttribute('ip_addresses');
+
         return \is_string($values) ? explode(',', $values) : (array) $values;
     }
 

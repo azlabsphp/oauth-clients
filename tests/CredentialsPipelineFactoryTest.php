@@ -1,31 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the drewlabs namespace.
+ *
+ * (c) Sidoine Azandrew <azandrewdevelopper@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Drewlabs\Oauth\Clients\Tests;
 
 use Drewlabs\Oauth\Clients\BasicAuthCredentials;
 use Drewlabs\Oauth\Clients\BasicAuthorizationCredentialsFactory;
+use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
 use Drewlabs\Oauth\Clients\CredentialsPipelineFactory;
+use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 use Drewlabs\Oauth\Clients\JwtAuthorizationHeaderCredentialsFactory;
 use Drewlabs\Oauth\Clients\JwtCookieCredentialsFactory;
 use Drewlabs\Oauth\Clients\JwtTokenCredentials;
 use Drewlabs\Oauth\Clients\Tests\Stubs\PsrServerRequestFacade;
+use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use PHPUnit\Framework\TestCase;
-use Nyholm\Psr7\Factory\Psr17Factory;
-use Drewlabs\Oauth\Clients\Contracts\CredentialsIdentityInterface;
-use Drewlabs\Oauth\Clients\Exceptions\AuthorizationException;
 
 class CredentialsPipelineFactoryTest extends TestCase
 {
-
-    private function createPipeline(array $factories)
-    {
-        return new CredentialsPipelineFactory(...$factories);
-    }
-
     public function test_credentials_pipeline_create_client_credentials_if_jwt_cookis_is_provided()
     {
-        $factory = $this->createPipeline([new JwtCookieCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword')]);
+        $factory = $this->createPipeline([new JwtCookieCredentialsFactory(new PsrServerRequestFacade(), 'SuperSecretPassword')]);
         $credentials = new JwtTokenCredentials('SuperSecretPassword');
         $jwtToken = (string) $credentials->withTTL(3)->withPayload('apikey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0');
         $serverRequest = $this->createServerRequest();
@@ -39,12 +44,11 @@ class CredentialsPipelineFactoryTest extends TestCase
         $this->assertSame('NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0', $credentials->getSecret());
     }
 
-
     public function test_credentials_pipeline_create_client_credentials_if_basic_authorization()
     {
-        $factory = $this->createPipeline([new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade)]);
+        $factory = $this->createPipeline([new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade())]);
         $request = $this->createServerRequest();
-        $request = $request->withAddedHeader('Authorization', 'Basic ' . base64_encode(sprintf('%s:%s', 'apiKey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0')));
+        $request = $request->withAddedHeader('Authorization', 'Basic '.base64_encode(sprintf('%s:%s', 'apiKey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0')));
 
         // Act
         $credentials = $factory->create($request);
@@ -54,10 +58,9 @@ class CredentialsPipelineFactoryTest extends TestCase
         $this->assertSame('NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0', $credentials->getSecret());
     }
 
-
     public function test_credentials_pipeline_create_client_credentials_if_jwt_authorization_header()
     {
-        $factory = $this->createPipeline([new JwtAuthorizationHeaderCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword')]);
+        $factory = $this->createPipeline([new JwtAuthorizationHeaderCredentialsFactory(new PsrServerRequestFacade(), 'SuperSecretPassword')]);
 
         $credentials = new JwtTokenCredentials('SuperSecretPassword');
         $jwtToken = (string) $credentials->withTTL(3)->withPayload('apikey', 'NXI4ZVg3Ps5eXzhC6YAR6l0N9DCClHY0');
@@ -80,11 +83,10 @@ class CredentialsPipelineFactoryTest extends TestCase
 
         // Initialize
         $factory = $this->createPipeline([
-            new JwtAuthorizationHeaderCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword'),
-            new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade),
-            new JwtCookieCredentialsFactory(new PsrServerRequestFacade, 'SuperSecretPassword')
+            new JwtAuthorizationHeaderCredentialsFactory(new PsrServerRequestFacade(), 'SuperSecretPassword'),
+            new BasicAuthorizationCredentialsFactory(new PsrServerRequestFacade()),
+            new JwtCookieCredentialsFactory(new PsrServerRequestFacade(), 'SuperSecretPassword'),
         ]);
-
 
         // Act
         $factory->create($this->createServerRequest());
@@ -103,6 +105,10 @@ class CredentialsPipelineFactoryTest extends TestCase
         $factory->create($this->createServerRequest());
     }
 
+    private function createPipeline(array $factories)
+    {
+        return new CredentialsPipelineFactory(...$factories);
+    }
 
     private function createServerRequest()
     {

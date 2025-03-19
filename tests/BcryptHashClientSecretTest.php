@@ -24,7 +24,7 @@ class BcryptHashClientSecretTest extends TestCase
     public function test_bcrypt_hash_client_secret_returns_string_hashed_value()
     {
         $secretHash = new BcryptHashClientSecret();
-        $is_string = is_string($secretHash->hashSecret('MySuperSecretPassword'));
+        $is_string = \is_string($secretHash->hashSecret('MySuperSecretPassword'));
         $this->assertTrue($is_string);
     }
 

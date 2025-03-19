@@ -24,7 +24,7 @@ class Argon2iHashClientSecretTest extends TestCase
     public function test_argon2i_hash_client_secret_returns_string_hashed_value()
     {
         $secretHash = new Argon2iHashClientSecret();
-        $is_string = is_string($secretHash->hashSecret('MySuperSecretPassword'));
+        $is_string = \is_string($secretHash->hashSecret('MySuperSecretPassword'));
         $this->assertTrue($is_string);
     }
 

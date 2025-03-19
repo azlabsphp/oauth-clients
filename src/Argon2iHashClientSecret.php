@@ -17,7 +17,7 @@ use Drewlabs\Oauth\Clients\Contracts\HashesClientSecret;
 
 class Argon2iHashClientSecret implements HashesClientSecret
 {
-    /**  @var array */
+    /** @var array */
     private $options;
 
     /**

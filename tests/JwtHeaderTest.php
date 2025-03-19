@@ -31,7 +31,7 @@ class JwtHeaderTest extends TestCase
         $jwtHeader = new JwtHeader();
 
         $encoded = $jwtHeader->encode();
-        $is_string = is_string($encoded);
+        $is_string = \is_string($encoded);
         $this->assertTrue($is_string);
     }
 
