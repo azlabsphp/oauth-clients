@@ -35,7 +35,7 @@ class JsonEncode
      *
      * @param mixed $data
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return string
      */
@@ -49,7 +49,7 @@ class JsonEncode
      *
      * @param string|array|object $value
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return string
      */
@@ -67,7 +67,6 @@ class JsonEncode
     {
         $sort = $sort ?? 'ksort';
 
-        // region Internal sort function
         $callable = static function (array &$list) use ($sort, &$callable) {
             foreach ($list as $key => $value) {
                 $is_object = \is_object($value);
@@ -81,7 +80,6 @@ class JsonEncode
         };
         $callable($value);
 
-        // endregion Internal function
         return $value;
     }
 }

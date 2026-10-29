@@ -15,12 +15,14 @@ namespace Drewlabs\Oauth\Clients\Tests;
 
 use Drewlabs\Oauth\Clients\Client;
 use Drewlabs\Oauth\Clients\Tests\Stubs\AttributeAwareMockFactory;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
     use AttributeAwareMockFactory;
 
+    #[AllowMockObjectsWithoutExpectations]
     public function test_client_constructor()
     {
         $attributes = array_values(array_filter(ClientsStub::getClients(), static function ($current) {
@@ -31,6 +33,7 @@ class ClientTest extends TestCase
         $this->assertFalse($client->isRevoked());
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function test_client_get_api_key_returns_api_key_value_from_attributes()
     {
         // Initialize

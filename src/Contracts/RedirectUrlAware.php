@@ -16,7 +16,7 @@ namespace Drewlabs\Oauth\Clients\Contracts;
 interface RedirectUrlAware
 {
     /**
-     * Returns the url where users are redirected after authentication.
+     * returns the url where users are redirected after authentication.
      */
     public function getRedirectUrl(): ?string;
 }

@@ -16,7 +16,9 @@ namespace Drewlabs\Oauth\Clients\Contracts;
 interface CredentialsFactoryInterface
 {
     /**
-     * Returns a (client, secret) tuple from provided request.
+     * returns a (client, secret) tuple from provided request.
+     * 
+     * @param mixed $request
      */
     public function create($request): ?CredentialsIdentityInterface;
 }

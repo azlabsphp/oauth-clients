@@ -39,6 +39,15 @@ class Client implements ClientEntityInterface
      */
     private $confidential;
 
+    /**
+     * creates new client class instance
+     * 
+     * @param mixed $id 
+     * @param mixed $name 
+     * @param mixed $redirect 
+     * @param bool $confidential 
+     * @return void 
+     */
     public function __construct($id, $name, $redirect = null, bool $confidential = false)
     {
         $this->id = $id;

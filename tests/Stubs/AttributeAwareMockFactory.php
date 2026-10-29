@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace Drewlabs\Oauth\Clients\Tests\Stubs;
 
 use Drewlabs\Oauth\Clients\Contracts\AttributesAware;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 
 trait AttributeAwareMockFactory
 {
+    #[AllowMockObjectsWithoutExpectations]
     public function createAttributeAware(array $values = [])
     {
         $attributes = $values ?? [];

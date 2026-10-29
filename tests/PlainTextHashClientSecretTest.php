@@ -16,6 +16,7 @@ namespace Drewlabs\Oauth\Clients\Tests;
 use Drewlabs\Oauth\Clients\Contracts\SecretClientInterface;
 use Drewlabs\Oauth\Clients\PlainTextHashClientSecret;
 use Drewlabs\Oauth\Clients\VerifyPlainTextSecretEngine;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -27,6 +28,7 @@ class PlainTextHashClientSecretTest extends TestCase
         $this->assertSame('PlainTextPassword', $plainTextHash->hashSecret('PlainTextPassword'));
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function test_verify_plain_text_hash_returns_true_if_string_matches_original_string()
     {
 
@@ -42,6 +44,7 @@ class PlainTextHashClientSecretTest extends TestCase
         $this->assertTrue((new VerifyPlainTextSecretEngine())->verify($client, 'MyPassword'));
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function test_verify_plain_text_hash_returns_false_if_string_does_not_matches_original_string()
     {
         /**

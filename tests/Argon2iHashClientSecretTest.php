@@ -16,6 +16,7 @@ namespace Drewlabs\Oauth\Clients\Tests;
 use Drewlabs\Oauth\Clients\Argon2iHashClientSecret;
 use Drewlabs\Oauth\Clients\Contracts\SecretClientInterface;
 use Drewlabs\Oauth\Clients\PasswordVerifyClientSecretEngine;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -28,6 +29,7 @@ class Argon2iHashClientSecretTest extends TestCase
         $this->assertTrue($is_string);
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function test_verify_client_secret_returns_true_on_result_of_argon2i_hash_if_password_equals_original()
     {
         /**
@@ -42,6 +44,7 @@ class Argon2iHashClientSecretTest extends TestCase
         $this->assertTrue((new PasswordVerifyClientSecretEngine())->verify($client, 'MyPassword'));
     }
 
+    #[AllowMockObjectsWithoutExpectations]
     public function test_verify_client_secret_returns_false_on_result_of_argon2i_hash_if_password_does_not_equals_original()
     {
         /**

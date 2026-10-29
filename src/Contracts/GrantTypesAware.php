@@ -16,7 +16,7 @@ namespace Drewlabs\Oauth\Clients\Contracts;
 interface GrantTypesAware
 {
     /**
-     * Returns list of grant types supported by the client.
+     * returns list of grant types supported by the client.
      *
      * @return string[]
      */

@@ -19,7 +19,7 @@ namespace Drewlabs\Oauth\Clients\Contracts;
 interface ScopeInterface
 {
     /**
-     * Returns the string representation of the scope object.
+     * returns the string representation of the scope object.
      */
     public function __toString(): string;
 }

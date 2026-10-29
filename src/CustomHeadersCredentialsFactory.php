@@ -49,6 +49,8 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
     /**
      * returns a credentials instance from request cookie.
      *
+     * @param mixed $request
+     * 
      * @return CredentialsIdentityInterface|null
      */
     private function fromCookie($request)
@@ -73,6 +75,8 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
     /**
      * Read a (client, secret) from request headers or request parsed body.
      *
+     * @param mixed $request
+     * 
      * @return Credentials|null
      */
     private function fromHeaders($request)
@@ -90,6 +94,10 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
         return new Credentials($client, $secret);
     }
 
+    /**
+     * @param mixed $request 
+     * @return mixed|string|null 
+     */
     private function getAuthSecret($request)
     {
         // We search for authorization secret using all possible header values
@@ -104,6 +112,10 @@ class CustomHeadersCredentialsFactory implements CredentialsFactoryInterface
         return $secret;
     }
 
+    /**
+     * @param mixed $request 
+     * @return mixed|string|null 
+     */
     private function getClientId($request)
     {
         $clientId = $this->serverRequest->getRequestHeader($request, 'x-authorization-client-id');

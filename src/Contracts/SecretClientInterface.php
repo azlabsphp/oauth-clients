@@ -16,7 +16,7 @@ namespace Drewlabs\Oauth\Clients\Contracts;
 interface SecretClientInterface extends ClientInterface
 {
     /**
-     * Return the token property of the client model.
+     * returns the token property of the client model.
      *
      * @return string
      */
